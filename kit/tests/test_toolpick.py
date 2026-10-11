@@ -193,3 +193,45 @@ def test_openai_embeddings_auto_and_dimensions(monkeypatch,tmp_path):
     emb=Embedder('openai',cache_dir=tmp_path,transport=httpx.MockTransport(handler),dimensions=256)
     emb.embed(['tool one'],'passage');url,b=sent[0]
     assert url=='https://api.openai.com/v1/embeddings' and b['model']=='text-embedding-3-small' and b['dimensions']==256 and 'input_type' not in b
+
+def test_optional_strategies_parse_and_dry_run(tmp_path):
+    for s in ('agent-search-kw','hybrid-kw','spacy@10','category-laya'):S.parse(s)
+    with pytest.raises(ValueError):S.parse('category-laya@3')
+    assert S.searching('agent-search-kw') and S.searching('hybrid-kw') and not S.searching('spacy@5')
+    assert 'category-laya' not in S.DEFAULT and 'spacy@10' not in S.DEFAULT
+    ex=Path(__file__).resolve().parents[1]/'examples'/'northstar-slice'
+    out=tmp_path/'run'
+    main(['run','--dry-run','--catalog',str(ex/'catalog.json'),'--cases',str(ex/'cases.json'),'--out',str(out),
+          '--strategies','agent-search-kw','hybrid-kw','spacy@5','category-laya'])
+    rows=[json.loads(l) for l in (out/'results.jsonl').read_text().splitlines()]
+    assert {r['strategy'] for r in rows}=={'agent-search-kw','hybrid-kw','spacy@5','category-laya'}
+    laya=[r for r in rows if r['strategy']=='category-laya']
+    assert all(r['discovery']['categories'] and r['discovery']['router']=='keyword-router' for r in laya)
+
+def test_spacy_embedder_real_model():
+    spacy=pytest.importorskip('spacy')
+    from toolpick.retrieval import SpacyEmbedder
+    try:emb=SpacyEmbedder()
+    except ImportError:pytest.skip('en_core_web_md not installed')
+    idx=EmbeddingIndex([{'name':'track_parcel','description':'Track a shipped parcel','parameters':{}},
+                        {'name':'refund_payment','description':'Refund money on an invoice','parameters':{}}],emb,kind='spacy')
+    assert idx.retrieve('track the shipped parcel',1)[0]==['track_parcel'] and len(emb.embed(['x'],'query')[0])==300 and idx.kind=='spacy'
+
+def test_laya_router_with_stub(monkeypatch):
+    import sys,types
+    calls=[]
+    agent_mod=types.ModuleType('laya.agent')
+    def _option_logits(logits,items,offset):return logits
+    agent_mod._option_logits=_option_logits
+    class Agent:
+        def predict(self,inputs,questions):
+            calls.append((inputs,questions));agent_mod._option_logits([[0.1,2.0,1.0]],None,0)
+            return {'answers':{'cat':{'choice':'billing'}}}
+    laya=types.ModuleType('laya');laya.load=lambda model,device:Agent();laya.agent=agent_mod
+    torch=types.ModuleType('torch');torch.set_num_threads=lambda n:None
+    monkeypatch.setitem(sys.modules,'laya',laya);monkeypatch.setitem(sys.modules,'laya.agent',agent_mod);monkeypatch.setitem(sys.modules,'torch',torch)
+    from toolpick.laya_router import LayaRouter,QUESTION
+    r=LayaRouter({'orders':'Orders','billing':'Invoices','shipping':'Parcels'})
+    top,probs=r.route('refund invoice I1',2)
+    assert top==['billing','shipping'] and abs(sum(probs.values())-1)<1e-9
+    assert calls[0][1]['cat']['instructions']==QUESTION and calls[0][0]=={'body':'refund invoice I1'}

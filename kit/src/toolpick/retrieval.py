@@ -74,11 +74,30 @@ class HashEmbedder:
             out.append(normalise(v))
         return out
 
+class SpacyEmbedder:
+    """Optional local embeddings: mean spaCy word vectors (the study's weakest retriever, kept for comparison).
+    Install with: pip install 'toolpick[spacy]' && python -m spacy download en_core_web_md"""
+    provider='spacy'
+    def __init__(self,model='en_core_web_md'):
+        try:import spacy
+        except ImportError as e:raise ImportError("spacy@k needs spaCy: pip install 'toolpick[spacy]' && python -m spacy download en_core_web_md") from e
+        try:self.nlp=spacy.load(model,exclude=['parser','ner','tagger','lemmatizer','attribute_ruler'])
+        except OSError as e:raise ImportError(f'spaCy model {model} is not installed: python -m spacy download {model}') from e
+        if not self.nlp.vocab.vectors_length:raise ValueError(f'spaCy model {model} has no word vectors; use en_core_web_md or _lg')
+        self.model=model
+    def embed(self,texts,kind):
+        out=[]
+        for doc in self.nlp.pipe(texts):
+            vs=[t.vector.tolist() for t in doc if t.has_vector and not t.is_punct and not t.is_space]
+            out.append(normalise([sum(c)/len(vs) for c in zip(*vs)]) if vs else [0.0]*self.nlp.vocab.vectors_length)
+        return out
+
 class EmbeddingIndex:
     """Cosine top-k between the request embedding and each tool's embedding."""
     kind='semantic'
-    def __init__(self,tools,embedder):
+    def __init__(self,tools,embedder,kind=None):
         self.names=[t['name'] for t in tools];self.embedder=embedder
+        if kind:self.kind=kind
         self.matrix=embedder.embed([tool_text(t) for t in tools],'passage')
     def retrieve(self,query,k):
         q=self.embedder.embed([query],'query')[0]

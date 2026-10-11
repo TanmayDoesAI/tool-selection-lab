@@ -6,16 +6,23 @@
   semantic@k      embedding top-k, fixed from the request (needs an embedding provider)
   agent-search    the agent starts with only search_tools and adds what it finds (@k = results per search)
   hybrid          top-k shortlist up front (semantic if available, else keyword) plus search_tools
+Optional (only when named in --strategies):
+  agent-search-kw agent-search that always searches with BM25
+  hybrid-kw       hybrid with a BM25 shortlist and BM25 search
+  spacy@k         top-k by mean spaCy word vectors        (pip install 'toolpick[spacy]')
+  category-laya   a local Laya model picks the categories (pip install 'toolpick[laya]')
 """
 import json,time
 
 BASES=('all','category','keyword','semantic','agent-search','hybrid')
+OPTIONAL=('agent-search-kw','hybrid-kw','spacy','category-laya')
+SEARCHING=('agent-search','hybrid','agent-search-kw','hybrid-kw')
 DEFAULT=('all','category','keyword@10','semantic@10','agent-search','hybrid')
 
 def parse(strategy):
     base,_,k=strategy.partition('@')
-    if base not in BASES:raise ValueError(f'unknown strategy {strategy!r}; choose from {", ".join(BASES)} (with @k for keyword, semantic, agent-search, hybrid)')
-    if k and (base in ('all','category') or not k.isdigit() or int(k)<1):raise ValueError(f'invalid strategy {strategy!r}')
+    if base not in BASES+OPTIONAL:raise ValueError(f'unknown strategy {strategy!r}; choose from {", ".join(BASES+OPTIONAL)} (@k for keyword, semantic, spacy and the search strategies)')
+    if k and (base in ('all','category','category-laya') or not k.isdigit() or int(k)<1):raise ValueError(f'invalid strategy {strategy!r}')
     return base,int(k) if k else None
 
 def search_tool(n,categories):
@@ -25,16 +32,18 @@ def search_tool(n,categories):
 
 class Context:
     """Everything strategies need, shared by all jobs in a run (indexes are built once)."""
-    def __init__(self,catalog,agent,k=10,search_k=5,category_limit=2,keyword=None,semantic=None):
+    def __init__(self,catalog,agent,k=10,search_k=5,category_limit=2,keyword=None,semantic=None,spacy=None,laya=None):
         self.catalog=catalog;self.tools={t['name']:t for t in catalog['tools']};self.agent=agent
         self.k=k;self.search_k=search_k;self.category_limit=category_limit;self.keyword=keyword;self.semantic=semantic
+        self.spacy=spacy;self.laya=laya   # optional indexes/routers, built only when their strategy is requested
         cats={}
         for t in catalog['tools']:
             if t.get('category'):cats.setdefault(t['category'],[]).append(t['name'])
         self.categories=cats
     def index(self,base):
         """Shortlist index for a strategy; search strategies prefer embeddings and fall back to keywords."""
-        if base=='keyword':return self.keyword
+        if base in ('keyword','agent-search-kw','hybrid-kw'):return self.keyword
+        if base=='spacy':return self.spacy
         if base=='semantic':
             if not self.semantic:raise ValueError('semantic strategies need an embedding provider (--embed-provider)')
             return self.semantic
@@ -42,7 +51,9 @@ class Context:
     def available(self,strategy):
         """Why a strategy cannot run on this setup, or None."""
         base,_=parse(strategy)
-        if base=='category' and not self.categories:return 'catalog has no categories'
+        if base in ('category','category-laya') and not self.categories:return 'catalog has no categories'
+        if base=='spacy' and not self.spacy:return "spaCy is not set up (pip install 'toolpick[spacy]')"
+        if base=='category-laya' and not self.laya:return "Laya is not set up (pip install 'toolpick[laya]')"
         if base=='semantic' and not self.semantic:return 'no embedding provider configured'
         return None
 
@@ -71,19 +82,22 @@ def discover(strategy,request,ctx):
     elif base=='category':
         chosen,turn=route(ctx,request);names=[n for c in chosen for n in ctx.categories[c]]
         info.update(categories=chosen,routing_input_tokens=turn.input_tokens,routing_output_tokens=turn.output_tokens)
-    elif base in ('keyword','semantic'):
+    elif base=='category-laya':
+        chosen,probs=ctx.laya.route(request,ctx.category_limit);names=[n for c in chosen for n in ctx.categories[c]]
+        info.update(categories=chosen,router=ctx.laya.kind,scores={c:round(v,4) for c,v in probs.items()})
+    elif base in ('keyword','semantic','spacy'):
         idx=ctx.index(base);names,scores=idx.retrieve(request,min(k or ctx.k,len(ctx.tools)));info['scores']=scores
-    elif base=='hybrid':
+    elif base in ('hybrid','hybrid-kw'):
         idx=ctx.index(base);names,_=idx.retrieve(request,min(k or ctx.k,len(ctx.tools)));info['index']=idx.kind
     else:names=[];info['index']=ctx.index(base).kind
     info.update(initial=list(names),seconds=round(time.perf_counter()-start,4))
     return names,info
 
-def searching(strategy):return parse(strategy)[0] in ('agent-search','hybrid')
+def searching(strategy):return parse(strategy)[0] in SEARCHING
 
 def search(strategy,query,names,ctx):
     """Handle one search_tools call: make the top matches callable and describe them to the model."""
-    base,k=parse(strategy);per=ctx.search_k if base=='hybrid' else (k or ctx.search_k)
+    base,k=parse(strategy);per=ctx.search_k if base in ('hybrid','hybrid-kw') else (k or ctx.search_k)
     found,_=ctx.index(base).retrieve(query,min(per,len(ctx.tools)))
     added=[n for n in found if n not in names];names.extend(added)
     return {'tools':[{'name':n,'description':ctx.tools[n]['description']} for n in found],

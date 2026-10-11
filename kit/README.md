@@ -53,6 +53,15 @@ paired significance test for each pair:
 | `agent-search` | a `search_tools` tool it can call |
 | `hybrid` | a top-k shortlist plus `search_tools` |
 
+**Optional strategies** (run only when you name them, e.g. `--strategies all hybrid category-laya`):
+
+| Strategy | What it adds | Needs |
+|---|---|---|
+| `agent-search-kw` | agent-search that always searches with BM25 | nothing |
+| `hybrid-kw` | hybrid with a BM25 shortlist and BM25 search | nothing |
+| `spacy@k` | top-k by mean spaCy word vectors, fully local | `pip install 'toolpick[spacy]'` and `python -m spacy download en_core_web_md` |
+| `category-laya` | a small local model ([Laya](https://huggingface.co/convaiinnovations/laya-multilingual)) picks the categories on CPU, no routing call | `pip install 'toolpick[laya]'` (PyTorch, ~1.3 GB) |
+
 With 20-30 cases, a gap of 1-2 cases is noise. Among strategies that are not significantly behind the best, pick the
 cheapest. A `not_exposed` failure means discovery hid the tool; `missing_tool` or `forbidden_tool` means the model saw
 it and chose wrong, so improve the descriptions.
@@ -64,5 +73,10 @@ it and chose wrong, so improve the descriptions.
 ```bash
 toolpick run --provider anthropic --catalog examples/northstar-full/catalog.json --cases examples/northstar-full/cases.json
 ```
+
+With the optional strategies, the kit covers all nine strategies of our study: `semantic@10` with NIM embeddings is
+the study's `semantic-nim@10`, and `spacy@10` is its `semantic@10`. It is still not a replay of the study: the kit
+grades tool **selection** (right tools and arguments), while the study grades **outcomes** (final data and the facts in
+the reply). Use [`../study`](../study) to reproduce our numbers exactly.
 
 The formats are defined in [`schemas/`](schemas/). Run the tests with `pytest`.

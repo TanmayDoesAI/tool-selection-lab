@@ -3,7 +3,7 @@ import argparse,json,os,re,sys
 from pathlib import Path
 from . import formats,strategies as S
 from .agents import make_agent,PROVIDERS
-from .retrieval import KeywordIndex,EmbeddingIndex,Embedder,HashEmbedder
+from .retrieval import KeywordIndex,EmbeddingIndex,Embedder,HashEmbedder,SpacyEmbedder
 from .runner import run
 from .report import generate,rank
 
@@ -29,6 +29,11 @@ def embedder_for(a):
     if p=='none':return None
     return Embedder(p,a.embed_model,a.embed_base_url,cache_dir=Path(a.out)/'.cache',timeout=a.timeout,retries=a.retries,dimensions=a.embed_dimensions)
 
+def optional(build):
+    """Build an optional index/router; on a missing dependency, report it and leave the strategy unavailable."""
+    try:return build()
+    except ImportError as e:print(f'note: {e}',file=sys.stderr);return None
+
 def auto_embed_provider(provider,agent=None,env=os.environ):
     """Same provider when it serves embeddings; otherwise OpenAI embeddings whenever OPENAI_API_KEY is set, then NIM."""
     if provider in ('openai','nim') and not agent:return provider
@@ -46,9 +51,15 @@ def cmd_run(a):
     agent,meta=make_agent(provider,a.model,a.base_url,a.agent,**kw)
     if a.out is None:a.out=str(Path('toolpick-runs')/re.sub(r'[^A-Za-z0-9.-]+','-',meta.get('model') or Path(a.agent).stem))
     emb=embedder_for(a)
-    ctx=S.Context(cat,agent,a.k,a.search_k,a.category_limit,KeywordIndex(cat['tools']),EmbeddingIndex(cat['tools'],emb) if emb else None)
+    kw_index=KeywordIndex(cat['tools'])
+    ctx=S.Context(cat,agent,a.k,a.search_k,a.category_limit,kw_index,EmbeddingIndex(cat['tools'],emb) if emb else None)
     chosen=a.strategies or list(S.DEFAULT)
-    for s in chosen:S.parse(s)
+    bases={S.parse(s)[0] for s in chosen}
+    if 'spacy' in bases:ctx.spacy=optional(lambda:EmbeddingIndex(cat['tools'],HashEmbedder() if a.dry_run else SpacyEmbedder(a.spacy_model),kind='spacy'))
+    if 'category-laya' in bases and ctx.categories:
+        from .laya_router import LayaRouter,KeywordRouter
+        descs={c:cat.get('categories',{}).get(c) or 'tools: '+', '.join(ns) for c,ns in ctx.categories.items()}
+        ctx.laya=optional(lambda:KeywordRouter(kw_index,{t['name']:t.get('category') for t in cat['tools']}) if a.dry_run else LayaRouter(descs))
     usable=[]
     for s in chosen:
         why=ctx.available(s)
@@ -56,6 +67,8 @@ def cmd_run(a):
         if why:print(f'skipping {s}: {why}',file=sys.stderr)
         else:usable.append(s)
     meta.update(embeddings=f'{emb.provider}:{emb.model}' if emb else None,search_index='semantic' if emb else 'keyword')
+    if ctx.spacy:meta['spacy_model']=ctx.spacy.embedder.model
+    if ctx.laya:meta['category_router']=getattr(ctx.laya,'model',ctx.laya.kind)
     run(cat,cases,usable,ctx,a.out,meta,a.repetitions,a.concurrency,a.max_steps,a.seed,a.retry_errors)
     return cmd_report(argparse.Namespace(run_dir=a.out))
 
@@ -80,13 +93,14 @@ def main(argv=None):
     r.add_argument('--model',help='default: TOOLPICK_MODEL, then the provider example model');r.add_argument('--base-url',help='default: TOOLPICK_BASE_URL, then the provider URL')
     r.add_argument('--agent',help='your own adapter instead of a provider: module:Class or path/to/file.py:Class')
     r.add_argument('--dry-run',action='store_true',help='offline: fake model and fake embeddings, no network or keys')
-    r.add_argument('--strategies',nargs='+',help=f'default: {" ".join(S.DEFAULT)} (semantic/category skipped when unavailable)')
+    r.add_argument('--strategies',nargs='+',help=f'default: {" ".join(S.DEFAULT)} (semantic/category skipped when unavailable); optional: agent-search-kw hybrid-kw spacy@10 category-laya')
     r.add_argument('--k',type=int,default=10,help='shortlist size for keyword/semantic/hybrid');r.add_argument('--search-k',type=int,default=5,help='results per search_tools call')
     r.add_argument('--category-limit',type=int,default=2);r.add_argument('--max-steps',type=int,default=8);r.add_argument('--repetitions',type=int,default=1)
     r.add_argument('--concurrency',type=int,default=4);r.add_argument('--timeout',type=float,default=120);r.add_argument('--retries',type=int,default=6)
     r.add_argument('--temperature',help='number, or "none" to omit it (default: 0 for NIM/compatible, omitted for OpenAI and Anthropic)')
     r.add_argument('--embed-provider',default='auto',choices=['auto','none','openai','nim','openai-compatible'],help='embeddings for semantic@k and search (auto: --provider if it is openai or nim, else OpenAI when OPENAI_API_KEY is set, else NIM, else none)')
     r.add_argument('--embed-model',help='default: text-embedding-3-small (openai), nvidia/nemotron-3-embed-1b (nim)');r.add_argument('--embed-base-url')
+    r.add_argument('--spacy-model',default='en_core_web_md',help='spaCy model with word vectors, for spacy@k')
     r.add_argument('--embed-dimensions',type=int,help='shorten OpenAI text-embedding-3 vectors (e.g. 512); other models ignore it unless they support `dimensions`')
     r.add_argument('--mocks',help='JSON file: tool name -> stub result (default {"ok": true})')
     r.add_argument('--retry-errors',action='store_true',help='on resume, re-run jobs that ended in api_error');r.add_argument('--seed',type=int,default=0)

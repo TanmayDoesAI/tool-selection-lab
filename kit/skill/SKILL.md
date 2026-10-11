@@ -1,6 +1,6 @@
 ---
 name: toolpick-cases
-description: Turn a tool catalog in any format (OpenAI or Anthropic tool JSON, MCP tools/list output, OpenAPI, Python functions, or plain prose) into toolpick's catalog.json, and write 20-30 graded test cases in cases.json, so the user can measure which tool-discovery strategy (all tools, category routing, keyword or semantic top-k, agent search, hybrid) works best for their agent. Use when someone wants to benchmark or choose how their agent finds tools, or asks to prepare inputs for toolpick.
+description: Turn a tool catalog in any format (OpenAI or Anthropic tool JSON, MCP tools/list output, OpenAPI, Python functions, or plain prose) into toolpick's catalog.json, and write 20-30 graded test cases in cases.json, so the user can measure which tool-discovery strategy (all tools, category routing, keyword or semantic top-k, agent search, hybrid) works best for their agent (six default strategies plus optional keyword-search, spaCy and local Laya-router variants). Use when someone wants to benchmark or choose how their agent finds tools, or asks to prepare inputs for toolpick.
 ---
 
 # Build toolpick inputs: catalog.json and cases.json
@@ -100,3 +100,8 @@ Fix every error. For each remaining warning, either fix it or tell the user why 
   `uv run toolpick run --provider openai --catalog catalog.json --cases cases.json`
   (or `--provider anthropic`, `--provider nim`, `--provider openai-compatible --base-url ...`, or `--agent file.py:Class`
   for their own harness), and `--dry-run` to check the plumbing offline first.
+- which strategies to run. The six defaults suit most users. Suggest the optional ones only when they fit:
+  `agent-search-kw` / `hybrid-kw` (no embedding API available, or to compare keyword vs embedding search),
+  `category-laya` (they want a free local router instead of an LLM routing call; needs categories and
+  `pip install 'toolpick[laya]'`), `spacy@10` (a cheap local baseline; `pip install 'toolpick[spacy]'`). Example:
+  `--strategies all hybrid keyword@10 category-laya`.

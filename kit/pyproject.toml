@@ -8,6 +8,8 @@ license = "MIT"
 dependencies = ["httpx>=0.27,<1", "jsonschema>=4.20,<5"]
 [project.optional-dependencies]
 fast = ["numpy>=1.26"]
+spacy = ["spacy>=3.7,<4"]                    # spacy@k; then: python -m spacy download en_core_web_md
+laya = ["laya>=0.4,<0.5", "torch>=2.2"]      # category-laya (local CPU model, ~1.3 GB download)
 [dependency-groups]
 dev = ["pytest>=8,<10"]
 [project.scripts]
