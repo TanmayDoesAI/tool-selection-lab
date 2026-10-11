@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "authoring": "Synthetic tools and tasks authored together by Codex; reference outcomes executed against fictional fixtures; no live held-out calls before freeze. Labels are descriptive author labels, not independently assessed difficulty.",
+  "split_seed": 1741,
+  "sha256": {
+    "dev.json": "0d2ce53449569d793d9318d55cd7e80b3f0f985c78c2ee8b41297f70c6e524be",
+    "test.json": "c214678de31684d7f34e94766b14c834083c7d772662b94da0fb407e075a6bee"
+  }
+}

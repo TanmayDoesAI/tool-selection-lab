@@ -1,0 +1,1813 @@
+[
+  {
+    "id": "orders-03",
+    "request": "What was the selling total of O100?",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "get_order_total",
+        {
+          "order_id": "O100"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "total": 24.0
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "get_order_total",
+          "get_order"
+        ]
+      ],
+      "argument_constraints": {
+        "get_order_total": {
+          "order_id": "O100"
+        },
+        "get_order": {
+          "order_id": "O100"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "orders-04",
+    "request": "Which items and quantities are in O101?",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "get_order_items",
+        {
+          "order_id": "O101"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "items": [
+          {
+            "sku": "BAG",
+            "quantity": 1
+          }
+        ]
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "get_order_items",
+          "get_order"
+        ]
+      ],
+      "argument_constraints": {
+        "get_order_items": {
+          "order_id": "O101"
+        },
+        "get_order": {
+          "order_id": "O101"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "orders-05",
+    "request": "Cancel the unshipped purchase O100.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "cancel_order",
+        {
+          "order_id": "O100"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "orders": {
+          "O100": {
+            "customer_id": "C1",
+            "status": "cancelled",
+            "items": [
+              {
+                "sku": "MUG",
+                "quantity": 2
+              }
+            ],
+            "total": 24.0,
+            "shipping_address": "14 Oak Road",
+            "note": "",
+            "priority": "normal"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "cancel_order"
+        ]
+      ],
+      "argument_constraints": {
+        "cancel_order": {
+          "order_id": "O100"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "inventory-04",
+    "request": "Allocate three MUG units for future fulfillment.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "reserve_stock",
+        {
+          "sku": "MUG",
+          "quantity": 3
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "inventory": {
+          "MUG": {
+            "on_hand": 20,
+            "reserved": 7,
+            "reorder_point": 5,
+            "warehouse": "east"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "reserve_stock"
+        ]
+      ],
+      "argument_constraints": {
+        "reserve_stock": {
+          "sku": "MUG",
+          "quantity": 3
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "inventory-05",
+    "request": "Free two allocated MUG units.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "release_stock",
+        {
+          "sku": "MUG",
+          "quantity": 2
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "inventory": {
+          "MUG": {
+            "on_hand": 20,
+            "reserved": 2,
+            "reorder_point": 5,
+            "warehouse": "east"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "release_stock"
+        ]
+      ],
+      "argument_constraints": {
+        "release_stock": {
+          "sku": "MUG",
+          "quantity": 2
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "inventory-06",
+    "request": "Receive five new BAG units from the supplier.",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "receive_stock",
+        {
+          "sku": "BAG",
+          "quantity": 5
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "inventory": {
+          "BAG": {
+            "on_hand": 8,
+            "reserved": 1,
+            "reorder_point": 4,
+            "warehouse": "west"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "receive_stock"
+        ]
+      ],
+      "argument_constraints": {
+        "receive_stock": {
+          "sku": "BAG",
+          "quantity": 5
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "inventory-07",
+    "request": "Replenish BAG when available stock drops below eight.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_reorder_point",
+        {
+          "sku": "BAG",
+          "quantity": 8
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "inventory": {
+          "BAG": {
+            "on_hand": 3,
+            "reserved": 1,
+            "reorder_point": 8,
+            "warehouse": "west"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_reorder_point"
+        ]
+      ],
+      "argument_constraints": {
+        "set_reorder_point": {
+          "sku": "BAG",
+          "quantity": 8
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "inventory-08",
+    "request": "Move MUG stock to the west warehouse.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "transfer_stock",
+        {
+          "sku": "MUG",
+          "warehouse": "west"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "inventory": {
+          "MUG": {
+            "on_hand": 20,
+            "reserved": 4,
+            "reorder_point": 5,
+            "warehouse": "west"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "transfer_stock"
+        ]
+      ],
+      "argument_constraints": {
+        "transfer_stock": {
+          "sku": "MUG",
+          "warehouse": "west"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "shipping-02",
+    "request": "Find parcels for O101.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "find_order_shipments",
+        {
+          "order_id": "O101"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": [
+        {
+          "id": "S1",
+          "order_id": "O101",
+          "status": "in_transit",
+          "carrier": "ParcelCo",
+          "tracking": "PK123",
+          "eta": "2026-10-09",
+          "address": "9 Elm Road",
+          "weight_kg": 1.2,
+          "service": "standard",
+          "delivered_at": null
+        }
+      ],
+      "state": {},
+      "evidence_groups": [
+        [
+          "find_order_shipments"
+        ]
+      ],
+      "argument_constraints": {
+        "find_order_shipments": {
+          "order_id": "O101"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "shipping-04",
+    "request": "When should S1 arrive?",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "estimate_delivery",
+        {
+          "shipment_id": "S1"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "eta": "2026-10-09"
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "estimate_delivery",
+          "get_shipment"
+        ]
+      ],
+      "argument_constraints": {
+        "estimate_delivery": {
+          "shipment_id": "S1"
+        },
+        "get_shipment": {
+          "shipment_id": "S1"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "shipping-05",
+    "request": "Quote express transport for a two kilogram parcel.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "quote_shipping",
+        {
+          "weight_kg": 2,
+          "service": "express"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "fee": 14
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "quote_shipping"
+        ]
+      ],
+      "argument_constraints": {
+        "quote_shipping": {
+          "weight_kg": 2,
+          "service": "express"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "shipping-06",
+    "request": "Redirect parcel S1 to 21 Pine Road.",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_parcel_address",
+        {
+          "shipment_id": "S1",
+          "address": "21 Pine Road"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "shipments": {
+          "S1": {
+            "order_id": "O101",
+            "status": "in_transit",
+            "carrier": "ParcelCo",
+            "tracking": "PK123",
+            "eta": "2026-10-09",
+            "address": "21 Pine Road",
+            "weight_kg": 1.2,
+            "service": "standard",
+            "delivered_at": null
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_parcel_address"
+        ]
+      ],
+      "argument_constraints": {
+        "set_parcel_address": {
+          "shipment_id": "S1",
+          "address": "21 Pine Road"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "customers-02",
+    "request": "Find customers called Alex Lee.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "search_customers",
+        {
+          "name": "Alex Lee"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": [
+        {
+          "id": "C1",
+          "name": "Alex Lee",
+          "email": "alex.one@example.test",
+          "address": "14 Oak Road",
+          "consent": false,
+          "tier": "silver",
+          "points": 120,
+          "credit": 0.0,
+          "tags": []
+        },
+        {
+          "id": "C2",
+          "name": "Alex Lee",
+          "email": "alex.two@example.test",
+          "address": "9 Elm Road",
+          "consent": true,
+          "tier": "gold",
+          "points": 400,
+          "credit": 5.0,
+          "tags": [
+            "vip"
+          ]
+        }
+      ],
+      "state": {},
+      "evidence_groups": [
+        [
+          "search_customers"
+        ]
+      ],
+      "argument_constraints": {
+        "search_customers": {
+          "name": "Alex Lee"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "customers-03",
+    "request": "Who has email alex.two@example.test?",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "get_customer_by_email",
+        {
+          "email": "alex.two@example.test"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": [
+        {
+          "id": "C2",
+          "name": "Alex Lee",
+          "email": "alex.two@example.test",
+          "address": "9 Elm Road",
+          "consent": true,
+          "tier": "gold",
+          "points": 400,
+          "credit": 5.0,
+          "tags": [
+            "vip"
+          ]
+        }
+      ],
+      "state": {},
+      "evidence_groups": [
+        [
+          "get_customer_by_email"
+        ]
+      ],
+      "argument_constraints": {
+        "get_customer_by_email": {
+          "email": "alex.two@example.test"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "customers-06",
+    "request": "Opt C1 into marketing.",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_marketing_consent",
+        {
+          "customer_id": "C1",
+          "consent": true
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "customers": {
+          "C1": {
+            "name": "Alex Lee",
+            "email": "alex.one@example.test",
+            "address": "14 Oak Road",
+            "consent": true,
+            "tier": "silver",
+            "points": 120,
+            "credit": 0.0,
+            "tags": []
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_marketing_consent"
+        ]
+      ],
+      "argument_constraints": {
+        "set_marketing_consent": {
+          "customer_id": "C1",
+          "consent": true
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "billing-04",
+    "request": "Record forty dollars paid on I2.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "record_payment",
+        {
+          "invoice_id": "I2",
+          "amount": 40
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "invoices": {
+          "I2": {
+            "order_id": "O101",
+            "amount": 40.0,
+            "paid": 40.0,
+            "refunded": 0.0,
+            "status": "paid",
+            "due_date": "2026-10-10",
+            "memo": ""
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "record_payment"
+        ]
+      ],
+      "argument_constraints": {
+        "record_payment": {
+          "invoice_id": "I2",
+          "amount": 40
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "billing-07",
+    "request": "Put Reviewed on I1 as an accounting memo.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "add_invoice_memo",
+        {
+          "invoice_id": "I1",
+          "memo": "Reviewed"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "invoices": {
+          "I1": {
+            "order_id": "O100",
+            "amount": 24.0,
+            "paid": 24.0,
+            "refunded": 0.0,
+            "status": "paid",
+            "due_date": "2026-10-12",
+            "memo": "Reviewed"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "add_invoice_memo"
+        ]
+      ],
+      "argument_constraints": {
+        "add_invoice_memo": {
+          "invoice_id": "I1",
+          "memo": "Reviewed"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "support-03",
+    "request": "Reply We are investigating on T1.",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "reply_ticket",
+        {
+          "ticket_id": "T1",
+          "message": "We are investigating"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "tickets": {
+          "T1": {
+            "customer_id": "C1",
+            "order_id": "O100",
+            "subject": "Damaged mug",
+            "status": "open",
+            "priority": "normal",
+            "assignee": "unassigned",
+            "tags": [],
+            "messages": [
+              "We are investigating"
+            ],
+            "sla_hours": 24
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "reply_ticket"
+        ]
+      ],
+      "argument_constraints": {
+        "reply_ticket": {
+          "ticket_id": "T1",
+          "message": "We are investigating"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "support-04",
+    "request": "Assign T1 to Maya.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "assign_ticket",
+        {
+          "ticket_id": "T1",
+          "agent": "Maya"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "tickets": {
+          "T1": {
+            "customer_id": "C1",
+            "order_id": "O100",
+            "subject": "Damaged mug",
+            "status": "open",
+            "priority": "normal",
+            "assignee": "Maya",
+            "tags": [],
+            "messages": [],
+            "sla_hours": 24
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "assign_ticket"
+        ]
+      ],
+      "argument_constraints": {
+        "assign_ticket": {
+          "ticket_id": "T1",
+          "agent": "Maya"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "support-06",
+    "request": "Set case T1 to open.",
+    "type": "confusable",
+    "fixture_patch": {
+      "tickets": {
+        "T1": {
+          "status": "closed"
+        }
+      }
+    },
+    "reference": [
+      [
+        "reopen_ticket",
+        {
+          "ticket_id": "T1"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "tickets": {
+          "T1": {
+            "customer_id": "C1",
+            "order_id": "O100",
+            "subject": "Damaged mug",
+            "status": "open",
+            "priority": "normal",
+            "assignee": "unassigned",
+            "tags": [],
+            "messages": [],
+            "sla_hours": 24
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "reopen_ticket"
+        ]
+      ],
+      "argument_constraints": {
+        "reopen_ticket": {
+          "ticket_id": "T1"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "support-08",
+    "request": "Classify T1 with damage tag.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "tag_ticket",
+        {
+          "ticket_id": "T1",
+          "tag": "damage"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "tickets": {
+          "T1": {
+            "customer_id": "C1",
+            "order_id": "O100",
+            "subject": "Damaged mug",
+            "status": "open",
+            "priority": "normal",
+            "assignee": "unassigned",
+            "tags": [
+              "damage"
+            ],
+            "messages": [],
+            "sla_hours": 24
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "tag_ticket"
+        ]
+      ],
+      "argument_constraints": {
+        "tag_ticket": {
+          "ticket_id": "T1",
+          "tag": "damage"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "marketing-01",
+    "request": "Show campaign K1.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "get_campaign",
+        {
+          "campaign_id": "K1"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "name": "Autumn",
+        "status": "draft",
+        "budget": 100.0,
+        "spend": 20.0,
+        "impressions": 1000,
+        "clicks": 100,
+        "conversions": 5,
+        "segment": "all",
+        "coupon": "FALL10"
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "get_campaign"
+        ]
+      ],
+      "argument_constraints": {
+        "get_campaign": {
+          "campaign_id": "K1"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "marketing-04",
+    "request": "Activate K1 advertising.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "activate_campaign",
+        {
+          "campaign_id": "K1"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "campaigns": {
+          "K1": {
+            "name": "Autumn",
+            "status": "active",
+            "budget": 100.0,
+            "spend": 20.0,
+            "impressions": 1000,
+            "clicks": 100,
+            "conversions": 5,
+            "segment": "all",
+            "coupon": "FALL10"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "activate_campaign"
+        ]
+      ],
+      "argument_constraints": {
+        "activate_campaign": {
+          "campaign_id": "K1"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "marketing-05",
+    "request": "Target K1 only at gold tier customers.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_campaign_segment",
+        {
+          "campaign_id": "K1",
+          "tier": "gold"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "campaigns": {
+          "K1": {
+            "name": "Autumn",
+            "status": "draft",
+            "budget": 100.0,
+            "spend": 20.0,
+            "impressions": 1000,
+            "clicks": 100,
+            "conversions": 5,
+            "segment": "gold",
+            "coupon": "FALL10"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_campaign_segment"
+        ]
+      ],
+      "argument_constraints": {
+        "set_campaign_segment": {
+          "campaign_id": "K1",
+          "tier": "gold"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "catalog-02",
+    "request": "Find listings with canvas in their name.",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "search_products",
+        {
+          "query": "canvas"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": [
+        {
+          "sku": "BAG",
+          "name": "Canvas Bag",
+          "price": 40.0,
+          "cost": 18.0,
+          "active": true,
+          "description": "Reusable canvas bag",
+          "weight_kg": 1.2,
+          "tags": [
+            "travel"
+          ],
+          "category": "accessories",
+          "supplier": "V2"
+        }
+      ],
+      "state": {},
+      "evidence_groups": [
+        [
+          "search_products"
+        ]
+      ],
+      "argument_constraints": {
+        "search_products": {
+          "query": "canvas"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "catalog-04",
+    "request": "Set the unit acquisition cost of MUG to six dollars.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_product_cost",
+        {
+          "sku": "MUG",
+          "cost": 6
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "products": {
+          "MUG": {
+            "name": "Ceramic Mug",
+            "price": 12.0,
+            "cost": 6,
+            "active": true,
+            "description": "Blue ceramic mug",
+            "weight_kg": 0.4,
+            "tags": [
+              "kitchen"
+            ],
+            "category": "home",
+            "supplier": "V1"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_product_cost"
+        ]
+      ],
+      "argument_constraints": {
+        "set_product_cost": {
+          "sku": "MUG",
+          "cost": 6
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "catalog-06",
+    "request": "Classify BAG in travel.",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_product_category",
+        {
+          "sku": "BAG",
+          "category": "travel"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "products": {
+          "BAG": {
+            "name": "Canvas Bag",
+            "price": 40.0,
+            "cost": 18.0,
+            "active": true,
+            "description": "Reusable canvas bag",
+            "weight_kg": 1.2,
+            "tags": [
+              "travel"
+            ],
+            "category": "travel",
+            "supplier": "V2"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_product_category"
+        ]
+      ],
+      "argument_constraints": {
+        "set_product_category": {
+          "sku": "BAG",
+          "category": "travel"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "returns-02",
+    "request": "Which physical returns exist for O101?",
+    "type": "paraphrase",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "list_order_returns",
+        {
+          "order_id": "O101"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": [
+        {
+          "id": "R1",
+          "order_id": "O101",
+          "sku": "BAG",
+          "quantity": 1,
+          "reason": "wrong size",
+          "status": "requested",
+          "received": false,
+          "inspection": "pending",
+          "label": null,
+          "fee": 0.0
+        }
+      ],
+      "state": {},
+      "evidence_groups": [
+        [
+          "list_order_returns"
+        ]
+      ],
+      "argument_constraints": {
+        "list_order_returns": {
+          "order_id": "O101"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "returns-04",
+    "request": "Reject physical return R1.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "reject_return",
+        {
+          "return_id": "R1"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "returns": {
+          "R1": {
+            "order_id": "O101",
+            "sku": "BAG",
+            "quantity": 1,
+            "reason": "wrong size",
+            "status": "rejected",
+            "received": false,
+            "inspection": "pending",
+            "label": null,
+            "fee": 0.0
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "reject_return"
+        ]
+      ],
+      "argument_constraints": {
+        "reject_return": {
+          "return_id": "R1"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "returns-07",
+    "request": "Mark R1 inspection as damaged.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "inspect_return",
+        {
+          "return_id": "R1",
+          "condition": "damaged"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "returns": {
+          "R1": {
+            "order_id": "O101",
+            "sku": "BAG",
+            "quantity": 1,
+            "reason": "wrong size",
+            "status": "requested",
+            "received": false,
+            "inspection": "damaged",
+            "label": null,
+            "fee": 0.0
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "inspect_return"
+        ]
+      ],
+      "argument_constraints": {
+        "inspect_return": {
+          "return_id": "R1",
+          "condition": "damaged"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "analytics-03",
+    "request": "How many MUG units were sold historically?",
+    "type": "confusable",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "sales_by_sku",
+        {
+          "sku": "MUG"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "units": 2
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "sales_by_sku"
+        ]
+      ],
+      "argument_constraints": {
+        "sales_by_sku": {
+          "sku": "MUG"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "analytics-04",
+    "request": "Summarize physical, reserved and available warehouse units.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "inventory_summary",
+        {}
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "on_hand": 23,
+        "reserved": 5,
+        "available": 18
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "inventory_summary"
+        ]
+      ],
+      "argument_constraints": {
+        "inventory_summary": {}
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "analytics-07",
+    "request": "Summarize open support cases and high urgency cases.",
+    "type": "direct",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "support_summary",
+        {}
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "open": 2,
+        "high": 1
+      },
+      "state": {},
+      "evidence_groups": [
+        [
+          "support_summary"
+        ]
+      ],
+      "argument_constraints": {
+        "support_summary": {}
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "multi-01",
+    "request": "Reserve enough MUG units to cover order O100, then report available MUG stock.",
+    "type": "multi_step",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "get_order_items",
+        {
+          "order_id": "O100"
+        }
+      ],
+      [
+        "reserve_stock",
+        {
+          "sku": "MUG",
+          "quantity": 2
+        }
+      ],
+      [
+        "get_available_stock",
+        {
+          "sku": "MUG"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "available": 14
+      },
+      "state": {
+        "inventory": {
+          "MUG": {
+            "on_hand": 20,
+            "reserved": 6,
+            "reorder_point": 5,
+            "warehouse": "east"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "get_order_items",
+          "get_order"
+        ],
+        [
+          "reserve_stock"
+        ],
+        [
+          "get_available_stock",
+          "get_stock"
+        ]
+      ],
+      "argument_constraints": {
+        "get_order_items": {
+          "order_id": "O100"
+        },
+        "get_order": {
+          "order_id": "O100"
+        },
+        "reserve_stock": {
+          "sku": "MUG",
+          "quantity": 2
+        },
+        "get_available_stock": {
+          "sku": "MUG"
+        },
+        "get_stock": {
+          "sku": "MUG"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "multi-04",
+    "request": "Find the parcel for O101 and redirect it to 21 Pine Road.",
+    "type": "multi_step",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "find_order_shipments",
+        {
+          "order_id": "O101"
+        }
+      ],
+      [
+        "set_parcel_address",
+        {
+          "shipment_id": "S1",
+          "address": "21 Pine Road"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "shipments": {
+          "S1": {
+            "order_id": "O101",
+            "status": "in_transit",
+            "carrier": "ParcelCo",
+            "tracking": "PK123",
+            "eta": "2026-10-09",
+            "address": "21 Pine Road",
+            "weight_kg": 1.2,
+            "service": "standard",
+            "delivered_at": null
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "find_order_shipments"
+        ],
+        [
+          "set_parcel_address"
+        ]
+      ],
+      "argument_constraints": {
+        "find_order_shipments": {
+          "order_id": "O101"
+        },
+        "set_parcel_address": {
+          "shipment_id": "S1",
+          "address": "21 Pine Road"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "multi-05",
+    "request": "Change MUG retail price to fourteen dollars and report its new unit margin.",
+    "type": "multi_step",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_product_price",
+        {
+          "sku": "MUG",
+          "price": 14
+        }
+      ],
+      [
+        "get_product_margin",
+        {
+          "sku": "MUG"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": {
+        "unit_margin": 9.0
+      },
+      "state": {
+        "products": {
+          "MUG": {
+            "name": "Ceramic Mug",
+            "price": 14,
+            "cost": 5.0,
+            "active": true,
+            "description": "Blue ceramic mug",
+            "weight_kg": 0.4,
+            "tags": [
+              "kitchen"
+            ],
+            "category": "home",
+            "supplier": "V1"
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_product_price"
+        ],
+        [
+          "get_product_margin",
+          "get_product"
+        ]
+      ],
+      "argument_constraints": {
+        "set_product_price": {
+          "sku": "MUG",
+          "price": 14
+        },
+        "get_product_margin": {
+          "sku": "MUG"
+        },
+        "get_product": {
+          "sku": "MUG"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "multi-07",
+    "request": "Approve R1 and create its inbound mailing label.",
+    "type": "multi_step",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "authorize_return",
+        {
+          "return_id": "R1"
+        }
+      ],
+      [
+        "create_return_label",
+        {
+          "return_id": "R1"
+        }
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": null,
+      "state": {
+        "returns": {
+          "R1": {
+            "order_id": "O101",
+            "sku": "BAG",
+            "quantity": 1,
+            "reason": "wrong size",
+            "status": "authorized",
+            "received": false,
+            "inspection": "pending",
+            "label": "RET-R1",
+            "fee": 0.0
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "authorize_return"
+        ],
+        [
+          "create_return_label"
+        ]
+      ],
+      "argument_constraints": {
+        "authorize_return": {
+          "return_id": "R1"
+        },
+        "create_return_label": {
+          "return_id": "R1"
+        }
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "multi-11",
+    "request": "Opt C1 into marketing and report the opted-in audience.",
+    "type": "multi_step",
+    "fixture_patch": {},
+    "reference": [
+      [
+        "set_marketing_consent",
+        {
+          "customer_id": "C1",
+          "consent": true
+        }
+      ],
+      [
+        "list_opted_in_audience",
+        {}
+      ]
+    ],
+    "grade": {
+      "status": "completed",
+      "facts": [
+        {
+          "id": "C1",
+          "name": "Alex Lee",
+          "email": "alex.one@example.test",
+          "address": "14 Oak Road",
+          "consent": true,
+          "tier": "silver",
+          "points": 120,
+          "credit": 0.0,
+          "tags": []
+        },
+        {
+          "id": "C2",
+          "name": "Alex Lee",
+          "email": "alex.two@example.test",
+          "address": "9 Elm Road",
+          "consent": true,
+          "tier": "gold",
+          "points": 400,
+          "credit": 5.0,
+          "tags": [
+            "vip"
+          ]
+        }
+      ],
+      "state": {
+        "customers": {
+          "C1": {
+            "name": "Alex Lee",
+            "email": "alex.one@example.test",
+            "address": "14 Oak Road",
+            "consent": true,
+            "tier": "silver",
+            "points": 120,
+            "credit": 0.0,
+            "tags": []
+          }
+        }
+      },
+      "evidence_groups": [
+        [
+          "set_marketing_consent"
+        ],
+        [
+          "list_opted_in_audience"
+        ]
+      ],
+      "argument_constraints": {
+        "set_marketing_consent": {
+          "customer_id": "C1",
+          "consent": true
+        },
+        "list_opted_in_audience": {}
+      }
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "clarify-04",
+    "request": "Give the customer some store credit.",
+    "type": "clarification",
+    "fixture_patch": {},
+    "reference": [],
+    "grade": {
+      "status": "clarification",
+      "question_contains": [
+        "amount"
+      ],
+      "state": {},
+      "evidence_groups": [],
+      "argument_constraints": {}
+    },
+    "split": "test",
+    "smoke": false
+  },
+  {
+    "id": "unsupported-04",
+    "request": "Send a bank wire to the supplier.",
+    "type": "unsupported",
+    "fixture_patch": {},
+    "reference": [],
+    "grade": {
+      "status": "unsupported",
+      "state": {},
+      "evidence_groups": [],
+      "argument_constraints": {}
+    },
+    "split": "test",
+    "smoke": false
+  }
+]

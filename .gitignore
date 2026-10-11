@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.cache/
+work/
+*.pyc
+.env
+.env.*
+run.lock
+runs/
+toolpick-runs/

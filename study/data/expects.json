@@ -1,0 +1,872 @@
+{
+ "analytics-01": [
+  "1.revenue",
+  "1.orders"
+ ],
+ "analytics-02": [
+  "1.revenue"
+ ],
+ "analytics-03": [
+  "1.units"
+ ],
+ "analytics-04": [
+  "1.on_hand",
+  "1.reserved",
+  "1.available"
+ ],
+ "analytics-05": [
+  "1.outstanding"
+ ],
+ "analytics-06": [
+  "1.refunded"
+ ],
+ "analytics-07": [
+  "1.open",
+  "1.high"
+ ],
+ "analytics-08": [
+  "1.total",
+  "1.delivered"
+ ],
+ "billing-01": [
+  "1.amount",
+  "1.paid",
+  "1.status",
+  "1.due_date"
+ ],
+ "billing-02": [
+  "1.[*].id"
+ ],
+ "billing-03": [
+  "1.balance"
+ ],
+ "billing-08": [
+  "1.[*].id",
+  "1.[*].amount"
+ ],
+ "catalog-01": [
+  "1.name",
+  "1.price",
+  "1.description"
+ ],
+ "catalog-02": [
+  "1.[*].sku",
+  "1.[*].name"
+ ],
+ "customers-01": [
+  "1.name",
+  "1.email",
+  "1.tier",
+  "1.points"
+ ],
+ "customers-02": [
+  "1.[*].id",
+  "1.[*].email"
+ ],
+ "customers-03": [
+  "1.[*].name"
+ ],
+ "customers-07": [
+  "1.points",
+  "1.tier"
+ ],
+ "hA-01": [
+  "1.on_hand",
+  "1.reserved"
+ ],
+ "hA-02": [
+  "1.order_id",
+  "1.sku",
+  "1.status",
+  "1.reason"
+ ],
+ "hA-03": [
+  "1.status",
+  "1.tracking"
+ ],
+ "hA-05": [
+  "1.[*].sku"
+ ],
+ "hA-06": [
+  "1.items[*].sku",
+  "1.items[*].quantity"
+ ],
+ "hA-07": [
+  "1.on_hand"
+ ],
+ "hA-10": [
+  "1.available"
+ ],
+ "hA-11": [
+  "3.items[*].sku"
+ ],
+ "hA-13": [
+  "1.status",
+  "1.carrier",
+  "1.tracking",
+  "1.eta"
+ ],
+ "hA-19": [
+  "1.available"
+ ],
+ "hA-23": [
+  "1.[*].tracking",
+  "1.[*].status"
+ ],
+ "hA-24": [
+  "1.[*].id",
+  "3.@empty"
+ ],
+ "hA-25": [],
+ "hA-26": [
+  "3.tracking",
+  "3.status",
+  "4.eta"
+ ],
+ "hA-27": [
+  "1.[*].sku",
+  "3.available"
+ ],
+ "hA-31": [],
+ "hA-32": [],
+ "hA-33": [],
+ "hA-34": [
+  "2.available"
+ ],
+ "hA-35": [
+  "1.items[*].quantity",
+  "2.on_hand",
+  "2.reserved"
+ ],
+ "hA-36": [],
+ "hA-37": [],
+ "hA-38": [],
+ "hB-01": [
+  "1.name",
+  "1.email",
+  "1.tier",
+  "1.points"
+ ],
+ "hB-02": [
+  "1.[*].id"
+ ],
+ "hB-03": [
+  "1.subject",
+  "1.status",
+  "1.priority",
+  "1.assignee"
+ ],
+ "hB-04": [
+  "1.[*].id",
+  "1.[*].subject"
+ ],
+ "hB-05": [
+  "1.points",
+  "1.tier"
+ ],
+ "hB-07": [
+  "1.[*].id",
+  "1.[*].name"
+ ],
+ "hB-08": [
+  "1.balance"
+ ],
+ "hB-09": [
+  "1.[*].id",
+  "1.[*].subject"
+ ],
+ "hB-13": [
+  "1.sla_hours"
+ ],
+ "hB-14": [
+  "1.amount",
+  "1.paid",
+  "1.refunded",
+  "1.status"
+ ],
+ "hB-15": [
+  "1.refundable"
+ ],
+ "hB-16": [
+  "1.[*].id",
+  "1.[*].status"
+ ],
+ "hB-17": [
+  "1.[*].id"
+ ],
+ "hB-21": [
+  "1.[*].id",
+  "1.[*].email"
+ ],
+ "hB-22": [
+  "1.[*].sku",
+  "1.[*].name"
+ ],
+ "hB-25": [
+  "2.balance"
+ ],
+ "hB-26": [
+  "2.[*].id",
+  "3.subject",
+  "3.status"
+ ],
+ "hB-27": [
+  "2.tracking",
+  "2.status"
+ ],
+ "hB-28": [
+  "1.[*].id",
+  "2.points",
+  "2.tier"
+ ],
+ "hC-01": [
+  "1.budget",
+  "1.spend",
+  "1.impressions",
+  "1.clicks",
+  "1.conversions"
+ ],
+ "hC-02": [
+  "1.unit_margin"
+ ],
+ "hC-03": [
+  "1.status",
+  "1.total",
+  "1.items[*].sku",
+  "1.items[*].quantity",
+  "1.shipping_address"
+ ],
+ "hC-04": [
+  "1.available"
+ ],
+ "hC-06": [
+  "1.ctr"
+ ],
+ "hC-07": [
+  "1.ctr"
+ ],
+ "hC-08": [
+  "1.units"
+ ],
+ "hC-09": [
+  "1.revenue",
+  "1.orders"
+ ],
+ "hC-10": [
+  "1.on_hand"
+ ],
+ "hC-11": [
+  "1.conversion_rate"
+ ],
+ "hC-12": [
+  "1.[*].name",
+  "1.[*].email"
+ ],
+ "hC-13": [
+  "1.[*].id",
+  "1.[*].amount"
+ ],
+ "hC-14": [
+  "1.cost"
+ ],
+ "hC-15": [
+  "1.percent"
+ ],
+ "hC-16": [
+  "1.conversion_rate"
+ ],
+ "hC-17": [
+  "1.unit_margin"
+ ],
+ "hC-19": [
+  "1.value"
+ ],
+ "hC-20": [
+  "1.reserved",
+  "1.on_hand"
+ ],
+ "hC-22": [
+  "1.[*].id",
+  "2.revenue"
+ ],
+ "hC-23": [
+  "1.[*].id"
+ ],
+ "hC-24": [
+  "1.[*].sku"
+ ],
+ "hC-25": [
+  "1.conversion_rate"
+ ],
+ "hD-01": [
+  "1.customers",
+  "1.opted_in",
+  "1.points"
+ ],
+ "hD-02": [
+  "1.name",
+  "1.price",
+  "1.cost",
+  "1.supplier"
+ ],
+ "hD-03": [
+  "1.recorded",
+  "1.counted",
+  "1.difference"
+ ],
+ "hD-05": [
+  "1.subject",
+  "1.status",
+  "1.priority"
+ ],
+ "hD-09": [
+  "1.[*].id",
+  "1.[*].name"
+ ],
+ "hD-10": [
+  "1.[*].name",
+  "1.[*].email"
+ ],
+ "hD-11": [
+  "1.[*].id"
+ ],
+ "hD-15": [
+  "1.recorded",
+  "1.difference"
+ ],
+ "hD-19": [
+  "3.status",
+  "3.total"
+ ],
+ "hD-20": [
+  "2.[*].id",
+  "3.items[*].sku",
+  "3.items[*].quantity"
+ ],
+ "hD-21": [
+  "3.balance"
+ ],
+ "hD-22": [],
+ "hD-23": [
+  "1.opted_in",
+  "2.[*].name"
+ ],
+ "hD-24": [
+  "2.on_hand",
+  "3.difference"
+ ],
+ "hD-25": [],
+ "hD-26": [
+  "2.clicks",
+  "2.conversions",
+  "4.customers"
+ ],
+ "hD-27": [
+  "4.status",
+  "4.tracking"
+ ],
+ "hD-28": [
+  "5.status",
+  "5.total"
+ ],
+ "hE-01": [
+  "1.amount",
+  "1.paid",
+  "1.status",
+  "1.due_date"
+ ],
+ "hE-03": [
+  "1.spend",
+  "1.clicks",
+  "1.conversions"
+ ],
+ "hE-07": [
+  "1.eta"
+ ],
+ "hE-08": [
+  "1.unit_margin"
+ ],
+ "hE-10": [
+  "1.sla_hours"
+ ],
+ "hE-16": [
+  "1.refund_quote"
+ ],
+ "hE-19": [],
+ "hE-20": [
+  "1.subject",
+  "2.sla_hours",
+  "5.eta"
+ ],
+ "hE-21": [
+  "2.refund_quote",
+  "3.[*].order_id"
+ ],
+ "hE-22": [
+  "1.unit_margin",
+  "2.value"
+ ],
+ "hE-23": [
+  "2.spend",
+  "2.clicks",
+  "2.conversions"
+ ],
+ "hE-24": [
+  "1.status",
+  "2.[*].status",
+  "2.[*].tracking"
+ ],
+ "hE-25": [],
+ "hE-26": [
+  "4.eta"
+ ],
+ "hE-27": [
+  "3.refund_quote",
+  "4.status"
+ ],
+ "hE-28": [
+  "3.status"
+ ],
+ "hF-01": [
+  "1.outstanding"
+ ],
+ "hF-07": [
+  "1.[*].sku",
+  "1.[*].name"
+ ],
+ "hF-13": [
+  "1.balance"
+ ],
+ "hF-18": [
+  "1.@empty"
+ ],
+ "hF-19": [
+  "2.@empty"
+ ],
+ "hF-20": [],
+ "hF-21": [
+  "2.value"
+ ],
+ "hF-22": [
+  "1.[*].tracking",
+  "2.status",
+  "1.[*].eta"
+ ],
+ "hF-23": [
+  "1.outstanding",
+  "2.[*].id"
+ ],
+ "hF-24": [
+  "2.balance"
+ ],
+ "hF-25": [],
+ "hF-26": [
+  "1.subject",
+  "2.[*].tracking",
+  "2.[*].status"
+ ],
+ "hF-27": [
+  "1.available"
+ ],
+ "hG-03": [
+  "1.status",
+  "1.carrier",
+  "1.tracking",
+  "1.eta"
+ ],
+ "hG-04": [
+  "1.[*].id",
+  "1.[*].subject"
+ ],
+ "hG-05": [
+  "1.on_hand"
+ ],
+ "hG-06": [
+  "1.refunded"
+ ],
+ "hG-07": [
+  "1.refundable"
+ ],
+ "hG-16": [],
+ "hG-18": [],
+ "hG-19": [
+  "1.status",
+  "3.status",
+  "3.tracking"
+ ],
+ "hG-20": [
+  "2.status",
+  "4.refundable"
+ ],
+ "hG-21": [
+  "2.[*].id",
+  "2.[*].status"
+ ],
+ "hG-22": [
+  "1.[*].id",
+  "1.[*].subject"
+ ],
+ "hG-24": [],
+ "hG-25": [
+  "1.refunded",
+  "3.balance"
+ ],
+ "hG-26": [
+  "3.[*].id",
+  "4.revenue"
+ ],
+ "hG-27": [
+  "1.status",
+  "3.status",
+  "4.eta",
+  "5.delivered"
+ ],
+ "hG-28": [
+  "1.points",
+  "1.tier",
+  "3.[*].id"
+ ],
+ "hH-01": [
+  "1.on_hand",
+  "1.reserved",
+  "1.available"
+ ],
+ "hH-02": [
+  "1.total",
+  "1.delivered"
+ ],
+ "hH-03": [
+  "1.@empty"
+ ],
+ "hH-05": [
+  "1.value"
+ ],
+ "hH-06": [
+  "1.[*].sku",
+  "1.[*].quantity",
+  "1.[*].reason",
+  "1.[*].status"
+ ],
+ "hH-07": [
+  "1.items[*].sku",
+  "1.items[*].quantity"
+ ],
+ "hH-09": [
+  "1.name",
+  "1.email",
+  "1.tier",
+  "1.points"
+ ],
+ "hH-10": [
+  "1.available"
+ ],
+ "hH-12": [
+  "1.[*].id"
+ ],
+ "hH-13": [
+  "1.value"
+ ],
+ "hH-14": [
+  "1.[*].id",
+  "1.[*].subject"
+ ],
+ "hH-16": [
+  "1.name",
+  "1.tier",
+  "1.points",
+  "1.address"
+ ],
+ "hH-19": [
+  "1.items[*].sku"
+ ],
+ "hH-20": [
+  "1.name",
+  "1.tier",
+  "1.points",
+  "2.[*].id"
+ ],
+ "hH-21": [
+  "1.[*].id",
+  "2.total",
+  "2.delivered"
+ ],
+ "hH-22": [
+  "1.name",
+  "1.status",
+  "1.budget"
+ ],
+ "hH-23": [
+  "1.items[*].sku",
+  "2.available"
+ ],
+ "hH-24": [
+  "1.name",
+  "2.on_hand",
+  "2.reserved",
+  "2.available"
+ ],
+ "hH-26": [
+  "3.on_hand",
+  "3.available"
+ ],
+ "hH-27": [
+  "1.name",
+  "1.status",
+  "1.budget"
+ ],
+ "hH-28": [
+  "1.total",
+  "1.delivered",
+  "2.[*].id"
+ ],
+ "hI-01": [
+  "1.open",
+  "1.high"
+ ],
+ "hI-04": [
+  "1.amount",
+  "1.paid"
+ ],
+ "hI-05": [
+  "1.revenue"
+ ],
+ "hI-10": [
+  "1.fee"
+ ],
+ "hI-11": [
+  "1.[*].name",
+  "1.[*].id"
+ ],
+ "hI-12": [
+  "1.conversion_rate"
+ ],
+ "hI-13": [
+  "1.available"
+ ],
+ "hI-14": [
+  "1.[*].id",
+  "1.[*].name"
+ ],
+ "hI-15": [
+  "1.[*].id",
+  "1.[*].status"
+ ],
+ "hI-19": [],
+ "hI-20": [
+  "1.[*].name",
+  "2.[*].id",
+  "2.[*].subject"
+ ],
+ "hI-21": [
+  "1.[*].sku",
+  "2.on_hand",
+  "3.available"
+ ],
+ "hI-22": [
+  "1.total"
+ ],
+ "hI-24": [
+  "3.conversion_rate"
+ ],
+ "hI-25": [
+  "2.fee"
+ ],
+ "hI-26": [
+  "1.revenue",
+  "2.points",
+  "2.tier"
+ ],
+ "hI-27": [
+  "1.open",
+  "1.high",
+  "2.[*].id"
+ ],
+ "hJ-03": [
+  "1.units"
+ ],
+ "hJ-08": [
+  "1.[*].id"
+ ],
+ "hJ-13": [
+  "1.value"
+ ],
+ "hJ-14": [
+  "1.ctr"
+ ],
+ "hJ-17": [
+  "1.status",
+  "1.tracking"
+ ],
+ "hJ-19": [
+  "3.@empty"
+ ],
+ "hJ-20": [
+  "1.points",
+  "1.tier"
+ ],
+ "hJ-21": [],
+ "hJ-22": [
+  "2.value"
+ ],
+ "hJ-23": [
+  "1.units",
+  "2.status"
+ ],
+ "hJ-24": [
+  "1.ctr"
+ ],
+ "hJ-26": [
+  "1.points",
+  "1.tier"
+ ],
+ "hJ-27": [
+  "1.[*].id",
+  "2.units"
+ ],
+ "hJ-28": [
+  "2.value"
+ ],
+ "hK-01": [
+  "1.total"
+ ],
+ "hK-03": [
+  "1.percent"
+ ],
+ "hK-04": [
+  "1.revenue",
+  "1.orders"
+ ],
+ "hK-12": [
+  "1.total"
+ ],
+ "hK-13": [
+  "1.units"
+ ],
+ "hK-19": [
+  "3.name",
+  "3.tier"
+ ],
+ "hK-20": [
+  "4.percent",
+  "2.tracking",
+  "3.eta"
+ ],
+ "hK-21": [],
+ "hK-22": [
+  "1.[*].sku",
+  "2.items[*].quantity"
+ ],
+ "hK-23": [
+  "1.[*].id"
+ ],
+ "hK-24": [
+  "2.revenue",
+  "2.orders"
+ ],
+ "hK-26": [
+  "2.[*].status",
+  "3.items[*].sku"
+ ],
+ "hK-27": [
+  "3.name",
+  "3.email",
+  "3.tier"
+ ],
+ "hK-28": [
+  "2.points",
+  "2.tier"
+ ],
+ "inventory-01": [
+  "1.on_hand",
+  "1.reserved",
+  "1.warehouse"
+ ],
+ "inventory-02": [
+  "1.available"
+ ],
+ "inventory-03": [
+  "1.[*].sku"
+ ],
+ "marketing-01": [
+  "1.name",
+  "1.status",
+  "1.budget",
+  "1.spend"
+ ],
+ "marketing-06": [
+  "1.ctr"
+ ],
+ "marketing-07": [
+  "1.conversion_rate"
+ ],
+ "marketing-08": [
+  "1.percent",
+  "1.uses"
+ ],
+ "multi-01": [
+  "3.available"
+ ],
+ "multi-02": [],
+ "multi-04": [],
+ "multi-05": [
+  "2.unit_margin"
+ ],
+ "multi-11": [
+  "2.[*].id",
+  "2.[*].email"
+ ],
+ "orders-01": [
+  "1.status",
+  "1.total",
+  "1.shipping_address"
+ ],
+ "orders-02": [
+  "1.[*].id"
+ ],
+ "orders-03": [
+  "1.total"
+ ],
+ "orders-04": [
+  "1.items[*].sku",
+  "1.items[*].quantity"
+ ],
+ "returns-01": [
+  "1.status",
+  "1.inspection",
+  "1.reason"
+ ],
+ "returns-02": [
+  "1.[*].id",
+  "1.[*].status"
+ ],
+ "shipping-01": [
+  "1.status",
+  "1.carrier",
+  "1.tracking",
+  "1.eta"
+ ],
+ "shipping-02": [
+  "1.[*].id",
+  "1.[*].status"
+ ],
+ "shipping-03": [
+  "1.status",
+  "1.tracking"
+ ],
+ "shipping-04": [
+  "1.eta"
+ ],
+ "shipping-05": [
+  "1.fee"
+ ],
+ "support-01": [
+  "1.subject",
+  "1.status",
+  "1.priority",
+  "1.assignee"
+ ],
+ "support-02": [
+  "1.[*].id",
+  "1.[*].subject"
+ ]
+}

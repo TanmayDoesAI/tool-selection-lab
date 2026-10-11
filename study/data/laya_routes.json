@@ -1,0 +1,1572 @@
+{
+ "meta": {
+  "model": "convaiinnovations/laya-multilingual",
+  "laya": "0.4.0",
+  "variant": "B_tools_area: \"Which business area's tools are needed to fulfil this request?\"",
+  "mode": "choice, top-2 by unrounded softmax over option logits",
+  "dtype": "fp32",
+  "threads": 2,
+  "cpu": "Raspberry Pi 5",
+  "median_seconds_per_request": 0.974,
+  "peak_rss_mb": 2574,
+  "note": "Request text truncated to 600 chars; keyed by sha256(request). Unsupported/clarification haiku requests are routed live-equivalently below."
+ },
+ "routes": {
+  "a1cafaafa5523942ec1a33e54ef4ea17f0d347e4bd3df8adf63ce9a4747a55d8": [
+   "returns",
+   "inventory"
+  ],
+  "934c212ea14fab51700db4609ba17b7d2d715e7e1d20507fed55be0531c20ce8": [
+   "returns",
+   "orders"
+  ],
+  "cc429d3aa5c801e3e98b518886bbb5ae50fba4a2f93fb5bf41a57387f9724efd": [
+   "shipping",
+   "returns"
+  ],
+  "fce9da672b900a34894b58cb3448ddc10f080d0d33905d53f2e217e5e4f0139b": [
+   "orders",
+   "shipping"
+  ],
+  "780b968192d7615f9e41e7195ece897c82e1863c5b799b436e883cd991080ae2": [
+   "inventory",
+   "returns"
+  ],
+  "0666d055fcb0649301104f04c56cd08478f8f572b7234697578c7ad941a17587": [
+   "orders",
+   "inventory"
+  ],
+  "24932a47b003f5940951ef8f335bf24c45d01a35f994d570dbd5e22529e89614": [
+   "inventory",
+   "analytics"
+  ],
+  "94324ec6954db209b2ea9ce50fbd8cd241dc2bc02b494d0eec364ec8caaed743": [
+   "inventory",
+   "returns"
+  ],
+  "4e56adf6e4759e5f7aa32f4dd7120018ca16328632b5c42ec3d90ac032d3ec73": [
+   "orders",
+   "inventory"
+  ],
+  "fba0781b6be74eb857e913bf450981dccc72fb84703463c86756d850c0ea0bb7": [
+   "orders",
+   "shipping"
+  ],
+  "5fb5fa0dda9cdf194879b65affbe0d97450341d26737dccdb22581dd31c6c87b": [
+   "returns",
+   "inventory"
+  ],
+  "a15685b5e9ea0d8904c2851eee7f203af5f0d4c03e76453fb1a9b8b1f6d4fcd8": [
+   "returns",
+   "inventory"
+  ],
+  "844a4cd20a2d2befee0b16f19ecba94806da8a94d3b4c0e0555b09df91fe193a": [
+   "returns",
+   "orders"
+  ],
+  "d0819d4125986a7badbdd30f4b337061a3ebc8ffabedfc97ae242d68df56236a": [
+   "returns",
+   "inventory"
+  ],
+  "ea13f15f2b51f92457a451c88b5e7b9d1acf089b4cedd6cb164d2d21a41ec231": [
+   "orders",
+   "support"
+  ],
+  "55e8a9b4630c3ab103be2d2fe83f8c43548624507e795faf8795d4d2666c58cc": [
+   "returns",
+   "inventory"
+  ],
+  "0b41ea5fb06bdfe385a77e4d6fbdb18447c7062e69803f2d0c44469d67bffc60": [
+   "shipping",
+   "orders"
+  ],
+  "aaccc1b41399705486cdad2a2b9ef1cee914584b62ea6592c7ea0202fea29172": [
+   "shipping",
+   "inventory"
+  ],
+  "45207f7b160c0df4dfddecfde1a8f96c170e472615f1ff6b39a34a439b200f9c": [
+   "shipping",
+   "returns"
+  ],
+  "91171b1406f7a96823a61bd15f9be72da89e8b07ed06249a7bb5ba5fd197448a": [
+   "orders",
+   "returns"
+  ],
+  "e728e1f3f19235b23cc341f61164002c397be29a562839e7172180654d2f6494": [
+   "returns",
+   "inventory"
+  ],
+  "d1a1873d60215aa6e438c445fe0e1f471a83dbbec0c64228b7c4959d10bce942": [
+   "shipping",
+   "returns"
+  ],
+  "fc9ea0db5e76d6929d0c7ba487089bc82c494aae8f26fb8f23af1def5b17252a": [
+   "returns",
+   "inventory"
+  ],
+  "3dcfd36a14402820d99d7875f5651d2c41ac5858c54ea412200cee43803d1958": [
+   "returns",
+   "inventory"
+  ],
+  "e8c3783e00e2901cec59fd0dec2de8b6709f8913f4384e998aaa980a4356dc32": [
+   "support",
+   "shipping"
+  ],
+  "0c8b898a49d0b4e98ae32b8b4f347dc00b43a500e93eca5e920354ef3f3aab41": [
+   "returns",
+   "orders"
+  ],
+  "3abe60bacd0581a6413ea762507d9661fe5d8335e7716423dca8d9b2fc71ded9": [
+   "orders",
+   "inventory"
+  ],
+  "5d6df475d25e06a8872b3a469b3148f4f89ad90e167cf0da946f2a5f12b08931": [
+   "inventory",
+   "returns"
+  ],
+  "944b7676c0a3cbf7354dad9fb86b5bfc40a9978b007cc697cf067edd38bf3445": [
+   "billing",
+   "orders"
+  ],
+  "15ebf9261ba5a56f216e82c41eff96d6ec47a0d78e90314190ea1c79f1a6478b": [
+   "support",
+   "returns"
+  ],
+  "e40d862783c3e42c579dcb601cf2d8e8c648753b997d48c4dc738c93676735dc": [
+   "shipping",
+   "returns"
+  ],
+  "7a23e7fa7dc9e1fb693861f099d2bc7ac4e1206207f4baac0814be9474c984ff": [
+   "customers",
+   "marketing"
+  ],
+  "5e843a60f9b9a4c30f8d86d27ac8efeda290383114604690de5d88783b6d161c": [
+   "billing",
+   "returns"
+  ],
+  "b2d98952847511e3a105aabdcbf3cb739e886f49abbaad01204504e426684f62": [
+   "support",
+   "inventory"
+  ],
+  "bf7292b2b2d19d5f977511359d1eda511493a0c6402113a6cb137e7639925905": [
+   "support",
+   "customers"
+  ],
+  "fd1dffe2cae04cb34106b58d53c1ca3047ed3f77248af6cdfd6408a152878554": [
+   "returns",
+   "marketing"
+  ],
+  "5a63e7695dde6120a494c2b1dedc7c6c8db45dd0b94ada01b0f674e84f26482e": [
+   "billing",
+   "orders"
+  ],
+  "ce84741393606da9a8dc01717ee55971ab89983cce311fdbc96fb26f960005e2": [
+   "marketing",
+   "customers"
+  ],
+  "99fe75d1fcb37d1f23536a06581b39fa64c7cdf30f7985193f070cbe23e809ad": [
+   "billing",
+   "returns"
+  ],
+  "0ded1cd2ea7a274c19af6a94c34c3e58d6f1e1fdbd913f8c103fcbaa5f1f0d73": [
+   "support",
+   "inventory"
+  ],
+  "263e8ba6ccce77d80deb2aea92ef2233628ed959f34c498a18b0959a75bf8237": [
+   "returns",
+   "marketing"
+  ],
+  "021645ec36cda98dcda45333634a376e38456ac8ba2a03dce0406bd9a5f2df24": [
+   "analytics",
+   "marketing"
+  ],
+  "40c1d7fbb46599649ae771a76129a3baf4952b3e0f1e60bdf51852b45ac08b7c": [
+   "marketing",
+   "orders"
+  ],
+  "1b6422c03eed49ccadb706206bc56a8e95b20e3cc9c93dab3b5529c82fc3a004": [
+   "support",
+   "inventory"
+  ],
+  "c8da088d0c9d107793fbf44f2c01517260c4a4002e1e7c3d0c33970fb79e87ae": [
+   "billing",
+   "returns"
+  ],
+  "84ece2895a9cf8e50d3b2d15f2175d471c6765ce78bb0ecc26253a778fa673fa": [
+   "billing",
+   "returns"
+  ],
+  "72791f487e3aac11632ef60bf69d782d2a9bc089f8c049fda2e27023ec9d8ad4": [
+   "shipping",
+   "orders"
+  ],
+  "209a9e0e1a8c133af9262659b4e7f613696f60140298d393a859490195a8cfc8": [
+   "billing",
+   "orders"
+  ],
+  "869129d3baf53310254986d67c774874a2b03eb91e0ed06500e54bb5cf5da6df": [
+   "orders",
+   "returns"
+  ],
+  "3aef8a919f0f0aea69721e421b5e73471f23b3618fabb21ac89cdb79620176bd": [
+   "orders",
+   "shipping"
+  ],
+  "54b0dc91933904110b370dc28bd2245762d5c77d4ddb9f18ff6bdc06d9f1d4f9": [
+   "shipping",
+   "returns"
+  ],
+  "b23a69fce2386f5990b6f8c6843f7d612d62645047ca930922061d225c4ec09f": [
+   "customers",
+   "inventory"
+  ],
+  "25f6a3c0098662848607ad29f36d3b11cde0c96f4ecf55c5155ab48a4109c05f": [
+   "catalog",
+   "inventory"
+  ],
+  "03d9441471077a2f46ed983a447aa0c0180685af0f886f8a1012d1fe29d08da2": [
+   "returns",
+   "billing"
+  ],
+  "201385880ad23b6d88d20bf250f05d0060dfe7c7adc873930410e524b7286a3a": [
+   "billing",
+   "returns"
+  ],
+  "a2ebe2178a530174b29b98803e8e906a4cb49544fb0ffd1cc64e946e54376b7f": [
+   "billing",
+   "orders"
+  ],
+  "3eecc7de0861367606334be53cb4aed56b844412b1a3aa27c4bb8aeb48780d0b": [
+   "support",
+   "orders"
+  ],
+  "f748eea5bf3deba3ba5de96e8400f2fabb6dbad33cbe7dab4c25f488dd275e3f": [
+   "shipping",
+   "inventory"
+  ],
+  "b4c7d53a08640634cfff766bdaedb48931f6cf5808379f806a63065a4946a9a3": [
+   "orders",
+   "marketing"
+  ],
+  "8010819bcb7d0f08d1734f8ff802350667b4b1a03211db508c77fa96be7be61b": [
+   "marketing",
+   "orders"
+  ],
+  "a1a2a82f904f3fe5de00f12813a5db3b64d364a7c4bc9480a50c938ae5f65037": [
+   "analytics",
+   "inventory"
+  ],
+  "5c775bb3e480a50f55dc9247defb6b5be6e68ac54208969861ab75292e276d0c": [
+   "orders",
+   "returns"
+  ],
+  "ad797b638ea7b78afde242cc24faeedf557894420b5d5dad230998ddbe6a332d": [
+   "inventory",
+   "returns"
+  ],
+  "cbb62ce7775c1d0c3f0708860a1c4a185cef3ac3b7fe109603cb5da1764f3c72": [
+   "marketing",
+   "analytics"
+  ],
+  "1be629f3bb12f12829093312443f3b83a897e86d34ccf786ed55537ca0238207": [
+   "catalog",
+   "marketing"
+  ],
+  "9e14cfe98a21a0f886bf4c6b81402ce9cc8ba58da85589c24262af4c639abfac": [
+   "inventory",
+   "orders"
+  ],
+  "0bb8ee6880ef76457f70e0ed0894f80f4ddcd0bd1af64e437fecb4eed32d9654": [
+   "inventory",
+   "returns"
+  ],
+  "d5fbc4969413b4d6565906d8d79c349155f5efb3c9fda83be0c48c46673432a0": [
+   "inventory",
+   "orders"
+  ],
+  "6a9284baff8341793e694ef01e3c9df71c20eee61e541ad1c5250fdcd79323e9": [
+   "inventory",
+   "marketing"
+  ],
+  "fe693d9f52f80f1167fc0e165f0c864bbb711bc856311a743ceee16ce5b154c6": [
+   "marketing",
+   "orders"
+  ],
+  "025e1c4b3ae10d1d24e8b45e7eed5b190f2e04c68cfad80f59a8dad91f807b7b": [
+   "billing",
+   "inventory"
+  ],
+  "c5da7d2df237b90f3f1834b5000bed45ef43614187a7ab040a0598d75b90baae": [
+   "inventory",
+   "billing"
+  ],
+  "0d66a951df14afb00d89f4145b8664ef84f3b59e30bfb0324bd0ed0ee2a6b2e5": [
+   "marketing",
+   "inventory"
+  ],
+  "6dbaab1829338fc45b7eda800c2df084e75d6365850e80efae749d78411e0967": [
+   "analytics",
+   "billing"
+  ],
+  "d83ae49f51217209afcdd2ea7b9cc678e8b1a806b36032210128c376106843e2": [
+   "analytics",
+   "inventory"
+  ],
+  "70dbc42d9630eeb1f061fb53905683a52c4e1fa538ae0402c4a7a1bfbd3fb7f9": [
+   "marketing",
+   "shipping"
+  ],
+  "7865a4f4b9a09e2adc911472998b487ecea16974a1ae4455cdee64507546bee4": [
+   "inventory",
+   "returns"
+  ],
+  "32d81678c9e11731acfa0e8009874b003172e72787bfc2901981da502e4f3afe": [
+   "inventory",
+   "returns"
+  ],
+  "a6ec99fcce672137401df534e5b53e07b2d6d818077f1ff32b6085dcaf722bbf": [
+   "marketing",
+   "orders"
+  ],
+  "fa689f80b4f0de04bdb2b9e595bb2db045391b15a7c59d66003bd48a7a683ad8": [
+   "orders",
+   "returns"
+  ],
+  "6ac4d6ad3c27948fdbccaa4eb5df7935f007296d9084939b360044b3df490c3c": [
+   "returns",
+   "orders"
+  ],
+  "abcd1343a95511a738962560cb10808ea1369f3ad60e85a7329d26927a204247": [
+   "orders",
+   "returns"
+  ],
+  "9060e570c9ae6ca3502ff55f563a5e3a806ace789605999aabbef0fdf278c883": [
+   "marketing",
+   "analytics"
+  ],
+  "a11faaad4f5fe0b275bbae7d5b277d0279dc0ff365301d9cb266d624fca7020c": [
+   "customers",
+   "marketing"
+  ],
+  "05f581376f1b6531f22458cb9c573eccbb895d376dc569cccb41ef0ccab54438": [
+   "catalog",
+   "orders"
+  ],
+  "529d0b73548f427a11c4fa9ee3b47ee8f4c10482de3be8a6793444853f36e186": [
+   "inventory",
+   "returns"
+  ],
+  "b2023455a75a6a899d5ac6990dabaab19550ef2761e2bf29a99961a553c59be9": [
+   "inventory",
+   "marketing"
+  ],
+  "0ae0c336b2efcb979638d19eccdcd89826c700cf777354b0b114266754ba26f2": [
+   "support",
+   "inventory"
+  ],
+  "2ff07e9e4170b5742e44b3706d016442a91ee0a68258d2dbb26e4620919f4a13": [
+   "orders",
+   "inventory"
+  ],
+  "e3ce06d5c09f74671172bb50936da458c9585c5702f0332af1e3b350823fad32": [
+   "inventory",
+   "shipping"
+  ],
+  "df116e507843f38b67c45b3c4a0930985e2dafa9fe9a582d1e64c13f11dd0de5": [
+   "returns",
+   "shipping"
+  ],
+  "9a9e12e8cdb428cb735259ed1b5202dbf63f30b6883c21dd63e061e18bed9c62": [
+   "inventory",
+   "orders"
+  ],
+  "c283ac17cb17119fd5d5fd549ffa4172f46a681c905c7f93c3f25ff30dce6374": [
+   "marketing",
+   "shipping"
+  ],
+  "10efec1a58779e757391afb58ff3e63901b2208f01b65c66aafcab2c764c7117": [
+   "billing",
+   "orders"
+  ],
+  "ab2db5ff65793589fce394da9ebdab62e1febdaeb5f00238b757656a4665a25d": [
+   "returns",
+   "inventory"
+  ],
+  "8fbf579fe433e2919eaf84aeb4814b6d1b727954d0269392b222acdb85549274": [
+   "shipping",
+   "returns"
+  ],
+  "4a8d391541744960ec2f14f4d5da07855931b2ad86063798138f638c10b05497": [
+   "inventory",
+   "catalog"
+  ],
+  "ad6bfc0b3a8e5c0b5359c2ef91a90b86e742474d3f74efa5428c1fd2695e04ab": [
+   "inventory",
+   "returns"
+  ],
+  "8b0bde6c95c8040cdb5189756c955e62cebc2fef04f118576410aefc718cff4e": [
+   "returns",
+   "orders"
+  ],
+  "7c01d91d6befebcbca37675651ff9c52032c21351868cf91d6db15d6a85965bd": [
+   "support",
+   "orders"
+  ],
+  "4a7942d284c4e3584640b33904120685f25fe44b69237c93f35e6d958755f2da": [
+   "orders",
+   "customers"
+  ],
+  "38feb51d4ed96f5eeb2df6d7369c9e99719d0dcf36c89da3a6d33253a5e96689": [
+   "billing",
+   "orders"
+  ],
+  "e21fd3a8252badb27504304038c9d57caeec190ef5b2fe2a13167f0e76a0c900": [
+   "support",
+   "orders"
+  ],
+  "1f9b68e064fdc562c674a14a0b0c1c137cad196d571b24d42ade803b0085aaed": [
+   "customers",
+   "orders"
+  ],
+  "f86e93b5175797c12445dcedfed8de55cd748633e8b5c6e7e95865490f1669bb": [
+   "orders",
+   "inventory"
+  ],
+  "ea160d678911ee254165bb77e7405b2fe43d2d58fe41252c615330b7768d4e88": [
+   "returns",
+   "inventory"
+  ],
+  "6e1c6b56c9ce744c0588e17a2af8425492d622bffa56d865ac875f041f0e27e5": [
+   "returns",
+   "inventory"
+  ],
+  "b1d44cda24c57f7bc6983d73089c735b8fb2a232e59346ccd63ad24affae5c13": [
+   "shipping",
+   "orders"
+  ],
+  "51c334c2712907d93d2a8c533487ba3ca8f7cc4d843f9c66b1ad5bd27f7942e2": [
+   "support",
+   "orders"
+  ],
+  "975eb1f304ad1f5197dc123dd862ce668e4ef96e771ab053a50c126a7ceb1f97": [
+   "billing",
+   "orders"
+  ],
+  "ccd826dc007519566ae3f53dd4fd32f6a1daa659d3d83c4551a54d59ef02ce7b": [
+   "inventory",
+   "orders"
+  ],
+  "8ad206c545895fd0a887b3215339631e7bd51ad733624228ef01e4cb7c0c997e": [
+   "marketing",
+   "orders"
+  ],
+  "25f19907ff6260956ea20174339c1a712309fd0920ce9b319ad58aa91db5431e": [
+   "returns",
+   "inventory"
+  ],
+  "3bd4651eb71e872ce707c31f7c08223cd1db980f4f40f615e35e1e8d3dd0ed19": [
+   "shipping",
+   "catalog"
+  ],
+  "9078c74ed6818ec6dfc6c0e9c701c5b5c9aa4c0dc2c28c853637dc56a2b5c02a": [
+   "marketing",
+   "inventory"
+  ],
+  "58368ec1d85cb730f3810c9394e222fdb45ceee1dcdbe6e008343a4a443c80e2": [
+   "shipping",
+   "analytics"
+  ],
+  "611986cdb7122e4c3b36ef68a0a6bc2000e2890a438caf30cf937153cde91272": [
+   "analytics",
+   "billing"
+  ],
+  "f45322c709071e8370380cdfa239096c6864e3d39dd97badc4093120b2f97718": [
+   "customers",
+   "support"
+  ],
+  "0cce19ba07996ceb4c3a72635f98d4ef7d091528176fcf9dff36e424cb3479f3": [
+   "support",
+   "inventory"
+  ],
+  "4f85e0f5cddb7f5adc6f8c4f61df287d323aacacc3b29098b9de7aa5234f5a6f": [
+   "returns",
+   "inventory"
+  ],
+  "4d038b3cd819212da54feb20878e4e13f95205d41bd874f027f73b2a3e60328d": [
+   "returns",
+   "orders"
+  ],
+  "fa49706c6cd8eaa8f0e58c6f49d89e5af2414aec5f577ea83552e356c21ab36f": [
+   "catalog",
+   "marketing"
+  ],
+  "12ed478330684012d6106054ba1edee602f49a96a85ff38c5df687337c943eca": [
+   "marketing",
+   "inventory"
+  ],
+  "6bfec5a83f8b905c4d4c3c1dcebac33d3a032c983d08045968e0020716eb74af": [
+   "support",
+   "returns"
+  ],
+  "72c4f8da9e60aced3ef9f219f832a451a31a7ea2a621ade1efdf518f7ef664da": [
+   "returns",
+   "billing"
+  ],
+  "010508d144883a07758dc96591310c106ef4c1ed595ed4e425be4f9459dc4e97": [
+   "orders",
+   "returns"
+  ],
+  "30f469592f2c84e8b93f19601d4077ce028900e2f760061d14e19a38af875fc3": [
+   "catalog",
+   "inventory"
+  ],
+  "2f81398743a518d51900f97b4ce60661a0a80c29c886bc8abafba8288fabde70": [
+   "customers",
+   "orders"
+  ],
+  "228bcabde85235f65cd8d31e9e43ddcb5fa3f2a4e14de7136a9fc1fcb6f84653": [
+   "support",
+   "shipping"
+  ],
+  "652ec853d88bcbd25c20dc7400e8549fdec57de1f988e22a12e1ffa8ca4b679b": [
+   "returns",
+   "inventory"
+  ],
+  "c5689066ae658fdcd41e5e19eabb8eb2cdae6112f17a96f94ae1a74f336bfb29": [
+   "inventory",
+   "returns"
+  ],
+  "089e2b7984c6b849b386abccc3f6aeec3b4736f70c942cb3980022553fe9aa53": [
+   "marketing",
+   "inventory"
+  ],
+  "b7fdc23eba85da4b7a132c13ce117fb7d52fa32282f4ba18e80a00f83b3b46b6": [
+   "orders",
+   "shipping"
+  ],
+  "6baef99c216b06004b5d625f7184bde405176ff047b3cab935a28af27cf94852": [
+   "customers",
+   "support"
+  ],
+  "670cf84e77b9ec72026299682132b74193d6fbe02b3be4f866650c2e4876780f": [
+   "billing",
+   "orders"
+  ],
+  "0b93737aea07e53d76f074225c120400b65656f837e75c2918d2552c5db0a912": [
+   "returns",
+   "support"
+  ],
+  "1e0b0b562456195d8c6f6f10493bac5243c8edc10b6038c18989ce3a50ee58ed": [
+   "billing",
+   "shipping"
+  ],
+  "b2f7c7b200c1ffe07c8f7f69e3639efd5f1a50d57710c731f895fd25a03de1ba": [
+   "billing",
+   "inventory"
+  ],
+  "00f1d7e4cf66f97b034233a4cc49c5f08e239384d2f151944e735e5c3f49b57b": [
+   "returns",
+   "inventory"
+  ],
+  "6d2958ba0bec76f3bf37003b5e0e64a81b5cd8a3f40821cdb7ecd4b5ce9a8ffd": [
+   "inventory",
+   "returns"
+  ],
+  "4046a3433e4c70cabe1ec0adfca78a9be3be1235a5b659424b27596f573d4219": [
+   "catalog",
+   "inventory"
+  ],
+  "e10c70ebbe95d588627d1f2ee73f76887e2bc82d51a8dd839e2a05f82443dbc2": [
+   "inventory",
+   "shipping"
+  ],
+  "70c099166d63cdb3747615b62d182a038155fffd595020d52bcf96ff7f1b753d": [
+   "returns",
+   "orders"
+  ],
+  "77322cb5cbbe932fabd8d44ae265c3ee69cc20bcd87698e6973a02e2f8d52ee0": [
+   "marketing",
+   "support"
+  ],
+  "89a49accddc88c488dea7f7cdc8f87a847fa2a8d203371884f1171e408429dbc": [
+   "customers",
+   "marketing"
+  ],
+  "8a4fe1ada4c81caf2f7d80bae22cb2c43c52596f67000430d8c2cdb2a4a9a236": [
+   "billing",
+   "support"
+  ],
+  "7e3142a547dd15443f3c61253831cd867efdaed803718979799cdb1f1d7823ca": [
+   "billing",
+   "analytics"
+  ],
+  "3eb1e69d0f61fbc550f68c24f2b305bc537aeb92c025082853d67349401e7baa": [
+   "inventory",
+   "orders"
+  ],
+  "04dfb2ad6d4176cf9a4dc8b9c65351146005752ff24b322315b97184d8b26200": [
+   "support",
+   "analytics"
+  ],
+  "ebe2d005e930e7ca5ac69fe2cc94485ab1988e6814a9a180e4eec4a72bfadca4": [
+   "marketing",
+   "inventory"
+  ],
+  "6a027245101670f2d78abf630ead9585bccfe8e37d04626d0bc4698f735c955d": [
+   "customers",
+   "inventory"
+  ],
+  "251ee5a12963942f595d020a4c8cf9df65903e1d245b1336a26b2d349387e9d3": [
+   "inventory",
+   "orders"
+  ],
+  "d34563f9f5888cfd7578fd38cfda74ac89baaa20b190ea60e2573961e86e2b3a": [
+   "inventory",
+   "returns"
+  ],
+  "7cdd6652bd85129eeec1eebfc4af69748a27c80edb086f24106d18f885fe60e2": [
+   "shipping",
+   "support"
+  ],
+  "c8fa2180a79f7229336eb1d42a897d3813e9f04e1327ce7155abee9c704f8461": [
+   "billing",
+   "orders"
+  ],
+  "0ce2c8ac5ec9584a61af8da0a43cdd941908aceb72120c32f4799b0ac6a9e963": [
+   "shipping",
+   "returns"
+  ],
+  "5561b28d5d9d5c3f4f16e884bcb370410c362f6b5c7e1349457072184cf85ff1": [
+   "billing",
+   "returns"
+  ],
+  "61e0178bedf7ace12ea8bf5f58eb74c69bf5b0fc405a17bb3c6d83696e492d72": [
+   "billing",
+   "orders"
+  ],
+  "02643ddc98a719d45f1aa5d5e08576b5814c4902df517765f656f38cf9dace9c": [
+   "marketing",
+   "inventory"
+  ],
+  "8e911ae876dbda920267d16a7b449443dcbf8fcbbc5b2b384cb22a59c28f4842": [
+   "shipping",
+   "inventory"
+  ],
+  "061e11fb41e2b2ec46c5b6acacbecdf33d6620a8eec180d4473bf004e36ecd29": [
+   "inventory",
+   "returns"
+  ],
+  "cbc6361728727f755fb9476e7016ad94bffba0a0a3ea56ac2db8694ac3529f94": [
+   "returns",
+   "orders"
+  ],
+  "b343d911b23f70aa797fcbe2e6c38ca58abd7f733edb55c99a50d32fed732522": [
+   "shipping",
+   "returns"
+  ],
+  "cb41f36261cefa7315e3d265dad5bbb9149974da068314eaf77f9e40e92955fe": [
+   "support",
+   "inventory"
+  ],
+  "cb1f7b04ee013e247825b059829039c0a47cc5ced338085b3395a8fc1f42de7d": [
+   "inventory",
+   "orders"
+  ],
+  "605da08a5ed2806c15044dc2bc57a25d50401900d4be6ad22542664401a65ffb": [
+   "billing",
+   "returns"
+  ],
+  "99b2938e260cc65e39dad629068a1614549ebbe24a365b470e3aa4c0c1ea42d0": [
+   "billing",
+   "returns"
+  ],
+  "d893a3f84c25c0d5673b79f329fdd5f68dae60ced123c945915fb05c698871e2": [
+   "returns",
+   "marketing"
+  ],
+  "d520f82e5dd24ca851478fd4592ae8c67a4e723cf862d4fff18cae959ccab0e6": [
+   "marketing",
+   "shipping"
+  ],
+  "22043fa2333ca98617e9689ba3cee4e95bde5792c7169d7dd646d9d6b078b5ba": [
+   "orders",
+   "marketing"
+  ],
+  "1440ad56b2d9bb3bca07ead32a4ad24c5127a85bb4c41052ba0a22725417363e": [
+   "inventory",
+   "returns"
+  ],
+  "40568fba473ab201983f3de6f0305a12eaca7880e847951c23e0a05303e1d383": [
+   "shipping",
+   "returns"
+  ],
+  "73f0c9ac92096000be4566da8e5ff6f30eddde6610c738ea0f613f824238aef1": [
+   "returns",
+   "customers"
+  ],
+  "a58ded9c097b7ff42813ba80c1967c16dad80269f5a9ad919194b09ae86d1279": [
+   "orders",
+   "returns"
+  ],
+  "cfee10bb03356dfbfd2ca866b2095be509bbfde55c1594e50f8e2bce3392129f": [
+   "billing",
+   "returns"
+  ],
+  "6e3894dbfb051e7b6ebe0f9f837dcadcdd0da816f19e1e02ba07cdd2a248a7cd": [
+   "inventory",
+   "orders"
+  ],
+  "6b33e91088a1f842a0c2d81444eb3dcf42b95b694092574f8ca7247b6bf1491d": [
+   "returns",
+   "inventory"
+  ],
+  "c8cbfb7bd2b0b4665d80b041759567c249aed7df672292b487108bf5f7fe01c8": [
+   "marketing",
+   "inventory"
+  ],
+  "15e45c2023b01fcbca108f10c41e995e475c022bd4c2afaaa74d51aae8804cb2": [
+   "orders",
+   "shipping"
+  ],
+  "db674ae6667bb0da21cf535acc175d79096077371d002edd35b5902a3dd44833": [
+   "returns",
+   "inventory"
+  ],
+  "2831551f866449568c8c14747a6bd0bf8f6e2bffde2a699f8a0178de8c47953f": [
+   "returns",
+   "inventory"
+  ],
+  "795eb95109fd0f86b9563f6ad30c18a722b2af446595ad2460c8fe771824537c": [
+   "support",
+   "inventory"
+  ],
+  "3b4be4227e71cd5405cd7b2757bba3cf7df6b993b1ac25641a35642729cc786d": [
+   "inventory",
+   "catalog"
+  ],
+  "2c245df36c88c3315a497d821a1dd2989e00aa4f1df4b5a765f4df80f91c6590": [
+   "orders",
+   "shipping"
+  ],
+  "b0f9587472730a02e9a06adc3e490ce3852a2c63f32aeee844b473c02c16e698": [
+   "returns",
+   "support"
+  ],
+  "cbe3a24941ae107947627ff929a6d0d5127a5c1ea0b64e0afeb81f63d056ff3f": [
+   "orders",
+   "customers"
+  ],
+  "de8bf6f00897533d9ddc3bf300415f9c29894704663a6e18dd208f14140d7a5f": [
+   "returns",
+   "inventory"
+  ],
+  "bb6b7acf461397b9036b4a9aacc574373e209345064313ae7e26e7f4f61ee00f": [
+   "orders",
+   "customers"
+  ],
+  "7e9a37cbccbfc0c5b4ef136484ab1336d222b654e0713b9b876d5a2e9b897058": [
+   "inventory",
+   "returns"
+  ],
+  "2628116cef7ab8442c82747ff9655e0d6659c79c48a55227792fd5247cdb552c": [
+   "inventory",
+   "returns"
+  ],
+  "0468ea953a391a66e775468ae6bc5a019a555a6c4d5bd5fe0e8baa4432a85b10": [
+   "shipping",
+   "returns"
+  ],
+  "179e4409f0112da8d47a279cf804371ffed0deffb2b27667ca8b752befe26f0d": [
+   "billing",
+   "inventory"
+  ],
+  "79edf0402651fda96cc9aa65692c63bbec9a4e88d3492024cef6b4d22b7c3668": [
+   "inventory",
+   "returns"
+  ],
+  "520a7f43f180e6c9aa91939af47f2c18fbfa0f498ee5b10ebd0ab2877a022c33": [
+   "returns",
+   "orders"
+  ],
+  "635c9505cd265cfbd06706685ce4aa1e182de63d3bb179f2d2aa9a3c7cf79472": [
+   "orders",
+   "catalog"
+  ],
+  "b56509e39d23e5292baad68bc4c2ab264dcd6a6d805aae4cc8001c854f39d132": [
+   "marketing",
+   "orders"
+  ],
+  "352dc79e040b79ea796c9674e69cdc84075aebf7e46bb636908ebe804cb676e9": [
+   "customers",
+   "inventory"
+  ],
+  "43a340f871357b39cd3fdac81beff66955a899d18c77fc3c332b30853f441d84": [
+   "returns",
+   "inventory"
+  ],
+  "b947771144d03bdaf8f78c92294b4aa0cd23da90b915c39119309db5e5855804": [
+   "returns",
+   "inventory"
+  ],
+  "433e285efda31dad854fc58db552ab7d173fc628eea9ebd4f94e55e6e7b15e6a": [
+   "billing",
+   "orders"
+  ],
+  "1646b23cf21300dffdf53ba1bea6af183ca45ed23555ad2b45542c22fe5ed4bc": [
+   "inventory",
+   "analytics"
+  ],
+  "0a9359c8e1248e159ad3a5dd36c2adbbfa7a5aada27864121c4c14b8221a0224": [
+   "support",
+   "inventory"
+  ],
+  "53e5b05442a3ab2815a17e8899aed4d43f1292f6ccedfbb03d01e578453e0392": [
+   "marketing",
+   "inventory"
+  ],
+  "ff92e43316dae05a345a17d0c688d4b1f09caa15e27433138197de3054c1e8ad": [
+   "customers",
+   "inventory"
+  ],
+  "09ec3088ba28ae5cc4ad648eadf9ecda402030ab2895aba966f72f27ed84b317": [
+   "returns",
+   "inventory"
+  ],
+  "1710b66d13e32fcefd2e7d1c8a29497a8fac7fbdb64d70974b409139170b85f6": [
+   "orders",
+   "shipping"
+  ],
+  "ba1bc8f413181fc9963f599a4a22211690a87ca768f805f4ddbb0c708ac1b0e3": [
+   "marketing",
+   "orders"
+  ],
+  "7990be5d1f7f2cffe8d439a7b7397736e362a1b68b463b3add360d2ff1ae60e6": [
+   "billing",
+   "inventory"
+  ],
+  "faef489166263a9276ec628042623fc9b7c3acb8aa5744dc91f9defe2112d666": [
+   "shipping",
+   "returns"
+  ],
+  "7980de4726dc9672d48953f18bd1056ffc5550350150b3fa32bce44f41a0dd2f": [
+   "marketing",
+   "orders"
+  ],
+  "9a078e5b51c0ebcf43f46d3f1b900127a348ddf2dd9eb32a1be0b95e40df850f": [
+   "orders",
+   "inventory"
+  ],
+  "d2636d4e4b5636eca065cd27ff0e6abab9fd158746696a3283e215ad59bf4b5f": [
+   "inventory",
+   "customers"
+  ],
+  "3173c1ef6a985946d9122cbc4b2396df5e542e9289b66ca5a925cda0683095df": [
+   "returns",
+   "shipping"
+  ],
+  "1ade1776084652c7fceb3a19da128367b23bd9e4650fabd52f0584fc1e3ac016": [
+   "returns",
+   "orders"
+  ],
+  "b7a9a11233f27ef705a29dbffa6a85c6668d31481011c1932d23554194ade789": [
+   "marketing",
+   "catalog"
+  ],
+  "d239e249d7b79267883e1181346a549599aa0136591d9b24a9380e6dfe622e8a": [
+   "shipping",
+   "returns"
+  ],
+  "94fd941c228bdbac4010d2680bbaf4146e4aeb70e5d510e05325ec6fa7abadf7": [
+   "support",
+   "analytics"
+  ],
+  "c0d0745e5a0883d7b36cf07518c913f4eb694f66b30cacda61a63a0bf1a4a802": [
+   "billing",
+   "orders"
+  ],
+  "af896533197883c1f9fa37e29c26dafeef4e2505b3989b2ad165be9bf0ddbdee": [
+   "returns",
+   "customers"
+  ],
+  "3a5fcafc34372aac2054ee8c78b455da412e680cedc47194e2f428871128486a": [
+   "shipping",
+   "catalog"
+  ],
+  "b3b98f2a954b94864f90732b1ed8a1a34cb2a97e780b8ae17a65db504538559f": [
+   "billing",
+   "orders"
+  ],
+  "ffc87e415a6a6498948d443bfccf67edc1a5668a2bc230ab8e13eabda2725cae": [
+   "marketing",
+   "customers"
+  ],
+  "03732c2699acefee4ff4e60d4ccc94a32672fcbaf5b64a8707feede17ac02089": [
+   "shipping",
+   "catalog"
+  ],
+  "b18ad694d62b7ca7195ff401ef8a859f4ec58700326c9a93f5d74d3f8ccff2b8": [
+   "customers",
+   "inventory"
+  ],
+  "7f1212f81b1e1356bc9acbcd5a1a42df2edc0ba32cc213ad3de471126fe76876": [
+   "marketing",
+   "analytics"
+  ],
+  "bff5193565dcdb6df2e6678ca56671b026159365a7a5d8ad921f5182d9286480": [
+   "inventory",
+   "orders"
+  ],
+  "16014dc89f3ea6f022b2ed86285973a6bdcaaf280c4dd44771f9c62e50768b77": [
+   "customers",
+   "inventory"
+  ],
+  "4b7841c1447d38f83e53f921408130053b97c8c432994ff7dac5f304e1ad77aa": [
+   "returns",
+   "orders"
+  ],
+  "9cab865d8cb2ddb3513d4666087ca9dcb81fad27245463c7f9088a5c514f0389": [
+   "returns",
+   "shipping"
+  ],
+  "c40600a6d4512adeef40fbb153cf26ba9046c9a990265470c935b92fb351fb3c": [
+   "shipping",
+   "returns"
+  ],
+  "f006aa15d6b093d979812c861340825dfc2d41f743595a39e4107bf24789d67f": [
+   "support",
+   "inventory"
+  ],
+  "e1c37de11440a9e25cd8c4bce9dda37720cf706d663a0607c827c8e8667f7eec": [
+   "inventory",
+   "analytics"
+  ],
+  "9527cec2bd356818ca3ff5d74c7e9bc332abf8406b888fd74675603de884c4f9": [
+   "billing",
+   "orders"
+  ],
+  "877a54c486abd26edc198ab2e1e1498f691f33a4f1c130673f04b4e62f7edcee": [
+   "marketing",
+   "customers"
+  ],
+  "5fae9b596a4b83c6f5fce356e2a38d7f464eef036887f6ed80f988066067fb4c": [
+   "shipping",
+   "catalog"
+  ],
+  "c04f162c9316e0ab528b1dcb390e6a4e2eeefaa8904f50f4bda6119ad5ea9666": [
+   "returns",
+   "marketing"
+  ],
+  "64f78e6a6ef2bd08e0a713b0239db080a8ee0f726c5a2bb17c22c8cf1a802263": [
+   "support",
+   "inventory"
+  ],
+  "54fba71230b2f90f11a65e89307f618c5474de17d654a4e5eca2581c39fbc849": [
+   "orders",
+   "returns"
+  ],
+  "86acb00a1d1e137485790428d7d5cb7f3dcd33a2089f28b0797eb567e0cd5545": [
+   "orders",
+   "inventory"
+  ],
+  "07f0eb134bb3283b57f512a2dfd5ed3dd9fb428cbc0bbaac9794ae677c4672b2": [
+   "billing",
+   "inventory"
+  ],
+  "b4000239774c4e07ab46a70c9a45c3baa5143a3800b10820cf09cfc799bb1000": [
+   "marketing",
+   "inventory"
+  ],
+  "abfd10623e57b2bd821d146585983240ecd90fae0802f30aba74d5c0e2dac1d1": [
+   "orders",
+   "inventory"
+  ],
+  "63a137a3f653d6e0be5e9ce2711ffec1342019b6d9bfba277e2336d731942e11": [
+   "shipping",
+   "returns"
+  ],
+  "a2df52247f1048edc07b17c6cb370057ffffc3f0892ffdcd9afe581782d0716b": [
+   "billing",
+   "returns"
+  ],
+  "1eef3b4d7d31377a59ec12a17105242193ada17f03f903b29ad2b5aead66074f": [
+   "orders",
+   "shipping"
+  ],
+  "de8b1844f0d16f1cdd3243d7b8d9121a5988c10a012cab302cc6a190ac10729c": [
+   "inventory",
+   "returns"
+  ],
+  "678f1a8f39ad01891ec90db2bd3e1380a6799989b89daeb02e6500b7cbc6d441": [
+   "marketing",
+   "inventory"
+  ],
+  "4a16700692665a38108aaf58d7d03b2009129bcf63b46ef85d78dc3c58f38afa": [
+   "orders",
+   "marketing"
+  ],
+  "a368829c3329a671b72779b790ce7902f1af4f308791f426e8d04adda13caf95": [
+   "shipping",
+   "marketing"
+  ],
+  "d372d65adb29bb42e9117e6bda33d6a0a58a723781defe17f70dd053199988dd": [
+   "shipping",
+   "returns"
+  ],
+  "73c6d3449968afe05b85af0ac8c4cf9b4a6e0913e05b23239a7f3c97bc818215": [
+   "shipping",
+   "returns"
+  ],
+  "ed9004e8da107003e92baedceac6e41e5c07a31e7ba049719a433cd2e0fb0ce4": [
+   "returns",
+   "orders"
+  ],
+  "e1345abede67fd41bae45e1c3b98683210da1411f5c1885a6498ed34d032c3bf": [
+   "returns",
+   "marketing"
+  ],
+  "62cdbfe866f7e8329244b5d0436bc6b1b8231cc2202aca56f30dd5c7e7161799": [
+   "billing",
+   "orders"
+  ],
+  "1f2e8453032e5e2f7df3ad7e48822d654d0b60314a5ecc917e5ee83314542285": [
+   "inventory",
+   "returns"
+  ],
+  "04d0884a821480009f54fc528035a1484e818b9998d9c0a9d7e8b924b04652c4": [
+   "inventory",
+   "analytics"
+  ],
+  "47632d08dee0bfef38b1797148bf74ba46f3d1a8ef1b12a64e634f4bf3f41ade": [
+   "marketing",
+   "analytics"
+  ],
+  "d9c0d2656e2deb8a1926372b7788e74a7491fc33d0e47a1ee5a1ba45b9c86536": [
+   "returns",
+   "orders"
+  ],
+  "2dfb8dd836b273ce81a76c5d150ad93e765bd92890f2d14c9cacd69ef35255db": [
+   "returns",
+   "marketing"
+  ],
+  "c795adaccae73e55750218b845dd23101a11fffb10bf6fb0d5fd159cc9cd813e": [
+   "orders",
+   "billing"
+  ],
+  "39b9f3d88eceef178880ecab3149b360af4120bf7f188858294ec53ca88260e6": [
+   "inventory",
+   "returns"
+  ],
+  "0a43e92ac576214ba15da6ec88d37b8ace877f63d72245f8bc7b78793f2a96f4": [
+   "billing",
+   "orders"
+  ],
+  "21bd82adfc4fcad92c7a2c206f5d26ee5c204dc9a5fd5dfa151a6331fd46237d": [
+   "marketing",
+   "inventory"
+  ],
+  "f4d2f16202b29f2329a93fd47fa27f743a6fd098af3496d3f99227b119534a1d": [
+   "inventory",
+   "orders"
+  ],
+  "55893a952f3bd2269cbb93ae318e3f4cd0b888500508fdd6b36c2987622cb0de": [
+   "support",
+   "inventory"
+  ],
+  "8672a744a103b74a7809dc2d2f51b87a9f0e223d7864eb1d6e57a33e159eda8a": [
+   "marketing",
+   "orders"
+  ],
+  "a395dbe3a0b98dbab009e4f23598451067798bbe508b92bd860edbfd31d02cf3": [
+   "marketing",
+   "customers"
+  ],
+  "4485d3a2de1c6d516a9c6844dec29f5a33c1ed020d27d83046a78c5153513f76": [
+   "billing",
+   "orders"
+  ],
+  "fcc6cd776929f9572096b0597a0c0a67767ab05efaadc46bdb806a86b936c8a8": [
+   "returns",
+   "marketing"
+  ],
+  "cef4ad920e897cc16eb120ef799912a414ca09598e281a3d21dac511cea30529": [
+   "support",
+   "customers"
+  ],
+  "0b4dd9678c4f92cecff4ab550a746a36737f4d3e7481df8dec3f38aabdd15461": [
+   "billing",
+   "orders"
+  ],
+  "bd452e843a38cb530e2e38e066802210820aa8d4b02385a38a3738c65556f694": [
+   "orders",
+   "inventory"
+  ],
+  "4d6f85577d1b7ad26a19d5f443a4c162a398559ded96a6e5775e161013f6b324": [
+   "billing",
+   "orders"
+  ],
+  "4da97c655708069ec699f241ae50fb2ce587a1c3d865aaa95ebbdb8a6061ad1f": [
+   "returns",
+   "inventory"
+  ],
+  "23b2bf7f3d7a31703ec97761777790a323ff279c4b86e52e55af7fb525e37f4c": [
+   "returns",
+   "billing"
+  ],
+  "b9b721e55d37d2e4bdc33e2fdc6d31f54b591cd573a0acc8b9fb28227867507b": [
+   "returns",
+   "inventory"
+  ],
+  "ab1d2ac857372ad21d1c107ffbc92ac800c00cd383de78bbab7500f6ca16b508": [
+   "returns",
+   "orders"
+  ],
+  "f1e548be6ae32e5ca6e458cd0fb37541eea9eb77abe664b846a8df85b12eaaed": [
+   "support",
+   "inventory"
+  ],
+  "064cdd9a27f9c1f824e7e70e2570d7baf9baec1051d0ae1a635d448b820c38be": [
+   "shipping",
+   "marketing"
+  ],
+  "ca012abbe345d69a15aaefa5584da4e314a999411623342dca856a814cc27c1b": [
+   "returns",
+   "billing"
+  ],
+  "494d1399e870279aa5cbe0a4d68a39fff3ecec873462ecf8c1f46c1b9024950c": [
+   "orders",
+   "returns"
+  ],
+  "bfb38650f97546828b19798ce75f01038c75fc25690e803a01826e3758ba87e7": [
+   "billing",
+   "support"
+  ],
+  "8c586b890a02e6425bca6b8ad404b601690ec1338406d254cbc5f5b3cff00fe5": [
+   "inventory",
+   "marketing"
+  ],
+  "91a7e179f5a8b9bb2d484b0292adf79e1a02928a1213cd6b353429349786e7b1": [
+   "returns",
+   "inventory"
+  ],
+  "017557bc21e19cd17ae3cbbd31a90fd5d4cc83958761475d9d5a9990d8c3d2e2": [
+   "orders",
+   "returns"
+  ],
+  "db65e401e29745ccec3abb974186ed50233201570134ed290a1e46aab4085d73": [
+   "billing",
+   "orders"
+  ],
+  "c3a10e589fd6a921cc6c6400a0815dfd0ed833c2f89c8e9ef7b59eba5a26c0e2": [
+   "returns",
+   "marketing"
+  ],
+  "ceb6d34e0bf725b8c4d64198c241e1231573ee025991fd3798386666f21b5f37": [
+   "inventory",
+   "returns"
+  ],
+  "716449eb8a0f044fb69b87ca80676c0ee5cd466c1cec113b57601a494fcb3ff2": [
+   "shipping",
+   "support"
+  ],
+  "22260458a3dbcb842f77da40d799e052126338ad7246b506a72e3f36c3f933b0": [
+   "orders",
+   "marketing"
+  ],
+  "a6d736b3ecc68c4984da048ed11fdd4113d3a2f8a6865003cd540eeba2db2e2d": [
+   "returns",
+   "billing"
+  ],
+  "c0d435d07c911fdf8b4d5e4219e08ba5e30a3dd862ba5ebf5f7a917b42179fb0": [
+   "returns",
+   "inventory"
+  ],
+  "485edf48e354c6eda2482c908a8d894436d76d7d1fc27d724b261a04af8baa80": [
+   "orders",
+   "returns"
+  ],
+  "a662472944bc939080bb10f9d29321732572edc7982b33946cf5fb75c52cbc90": [
+   "support",
+   "analytics"
+  ],
+  "7acba85fb05769bbea5a6bb84483a2f432d56741d7fa7b83cc4fd23505917796": [
+   "returns",
+   "support"
+  ],
+  "092195a90d9aac6b437d3ac396db003d7cbe2c5d2aa5997d3e5023f96e18633d": [
+   "returns",
+   "orders"
+  ],
+  "906c8054caf457beeedd93cdb477ccb35f944f07dfdac86cb821f64a7e0ee76c": [
+   "returns",
+   "billing"
+  ],
+  "6214ca127dcbd8bd58fb901fb6f376b86dfc1b014ca7e53271db2690f8851418": [
+   "shipping",
+   "marketing"
+  ],
+  "c2d579d5642abead3434a605ae4ab7930664be08bf2f1e784d619a4f037e5433": [
+   "orders",
+   "analytics"
+  ],
+  "72d6762873458adbdb78601b63fb7fa8323caad97a63c3d4cc386589efc356a4": [
+   "billing",
+   "returns"
+  ],
+  "389cd0cd468849895312cf85987d7cfcf9b52890c43e90b7fa64fbfacc5b020e": [
+   "orders",
+   "marketing"
+  ],
+  "79d94953ce2110fe777e8b13e6719e318498796f96714e43153654b8f31cb73d": [
+   "shipping",
+   "returns"
+  ],
+  "d8fd175016281538c2f815f12a5656565cb5be36e6721dbc3a7bfd514b83df7b": [
+   "returns",
+   "shipping"
+  ],
+  "101ca4929c0d841e95e0901ee2e97c036e3fc018c81e1af7eb61aea7760dd232": [
+   "support",
+   "analytics"
+  ],
+  "eef9332d4164e64080143e0a11495eb5d28983740f8e4c241f56e04314e192df": [
+   "marketing",
+   "inventory"
+  ],
+  "262cbc8e628d65301279ccd032147a17dbcafe47344e4bf8de044f46ae8bf93c": [
+   "orders",
+   "customers"
+  ],
+  "f95a8081c6f39d1ad4059e6e2adb7bccc36f111d69d8267a40f02892f80caf87": [
+   "marketing",
+   "catalog"
+  ],
+  "76aca3a0596fa92fc271a5da1d830bd04e28b8acc3a4131818a973541c17e31d": [
+   "orders",
+   "support"
+  ],
+  "0c0d5b690250eb59ee34773e54a52126cd310d85e7d5b11e2809d9459a086224": [
+   "billing",
+   "returns"
+  ],
+  "a3e4a684c0528732c1e89456405f6537f7e2095a4739bc9509a938851a26f237": [
+   "billing",
+   "orders"
+  ],
+  "4be7039fa2b00feefa5ab466ddca883708f057bfa4b5b290b547bafcbba19afe": [
+   "billing",
+   "orders"
+  ],
+  "6695c8508361d849b64fd766a6917a08769a16a57a8624a902d25d135ee8f935": [
+   "orders",
+   "returns"
+  ],
+  "58329186da3d39c589fc5ed88b22d73d3d005ccd2a765260a53307a8b5328779": [
+   "analytics",
+   "inventory"
+  ],
+  "5ef866a23201c8820f07fa59d03766150ededc6823436604df5d894d1b1118ee": [
+   "orders",
+   "returns"
+  ],
+  "e2ca4daba7cf3afdf040b0290f41f28f16fa7f355e2b7b501bc45853106dc212": [
+   "support",
+   "inventory"
+  ],
+  "260565b5f7607265f6c7f0a787557bd054ef35bb625318017b3f995a11fce3ee": [
+   "shipping",
+   "returns"
+  ],
+  "8e4ea53d473f7800797353de8fb2a13ea45040845af9389b3c3120a1a9dc7c10": [
+   "orders",
+   "marketing"
+  ],
+  "54a8a1488e773cfb7b30b3d4b89dca1996f51c08423b6ea4c254e8e5075b0820": [
+   "returns",
+   "inventory"
+  ],
+  "2bd4278916bbea987872e58818b373debd8ae4414e5167fdfb639ba95547093c": [
+   "returns",
+   "support"
+  ],
+  "80866d73d0bb53941f51a0ca41bf3e9a39c7ad05a9784f0d0dcbd6eba19d77c4": [
+   "inventory",
+   "returns"
+  ],
+  "93bb2f8e702143b7e1f2f4c8e2acefcb13569aeda0d49349cd758b715462d4a6": [
+   "returns",
+   "orders"
+  ],
+  "5d015a1ec8b662259d343d1ae7e4c2809db10e72341aca93a463508455657119": [
+   "orders",
+   "inventory"
+  ],
+  "40d566f4d1c982f7ed739e27ad7580c80cdb6125b5a5dc4bfc381a1dfbf05524": [
+   "returns",
+   "billing"
+  ],
+  "74184e50cfce733300cd5187c50f2931b1b301fd39276f7cf541980367376ce1": [
+   "shipping",
+   "support"
+  ],
+  "18398788348a907465b5a83f24df84e7362f0dd18d752f81733955ab3fe67c44": [
+   "analytics",
+   "orders"
+  ],
+  "7a699829718eb104c34e73fe77c4eae4aa95c01eb9c7a19adcc6af8adaf8b06c": [
+   "shipping",
+   "marketing"
+  ],
+  "ec39f6e6970ff7ee6a9677e0a8c8d0ed6a8c2f7559bb501a37b8afb436474fc8": [
+   "marketing",
+   "inventory"
+  ],
+  "8195f3d02a5d0b2d326bb54a44f71369d738186fc681cab453df33ea1ba9ebbe": [
+   "support",
+   "inventory"
+  ],
+  "98dc500d690df77ca30b5e770a206b5b3ad6a72e741d41cfd231ec4b9a1e5e11": [
+   "orders",
+   "returns"
+  ],
+  "a956bf21407fe2d68da9f2b0a786fbd4050e782d4652cb8e56a9682e61a1b213": [
+   "returns",
+   "orders"
+  ],
+  "e6a397fd1e08e56ae73664ae0e4a07faf7740be5d029149105dd1372a0518d6a": [
+   "marketing",
+   "orders"
+  ],
+  "ac932f75b299a73b527908033cf31797e110f5c47d180b33add518b17b642de9": [
+   "returns",
+   "inventory"
+  ],
+  "31a622702c273f4b701c1c041de088a31fa2c80fc56913c5ad4026119728c8dc": [
+   "returns",
+   "shipping"
+  ],
+  "aa08f7e54f1f770d2bb9c7ed3ff600329cc353a11860a7b771c78b400a095e26": [
+   "returns",
+   "inventory"
+  ],
+  "7e7d3c8b840c5c1e1e2070a9c496f450e87323144bed543c5e9cda0987b4f5a2": [
+   "orders",
+   "returns"
+  ],
+  "da14f9ca976d6269e5de9c82aa7a2eeda195113ac9ee1a6200df1a1d26f5cdc0": [
+   "billing",
+   "orders"
+  ],
+  "c081265481c22d4e5ef12d0b792676f24f9538cb058a5a2d81144e58bf2b7446": [
+   "returns",
+   "inventory"
+  ],
+  "f649b491ffeca415f05d8aa73245ea1612525239cfa26a49689c6b68cd1cb0aa": [
+   "returns",
+   "orders"
+  ],
+  "ccd43bce9735dc2bd99c2bc1c2a03cb6d63c2de34e4fd05888e1cbd633ba9ceb": [
+   "billing",
+   "returns"
+  ],
+  "18824429783883fe594fee964f8df37886b059e9a00129d0165b420dd4b4cdde": [
+   "support",
+   "orders"
+  ],
+  "cda7658a8642224822bb4efd194aa06ff75590a7df260ab963c298470f2f3ecc": [
+   "shipping",
+   "marketing"
+  ],
+  "4f4c1ab146f8d1ac16d587a885eee4f1bd409d19281ec9f11e5cc4a33c3924ad": [
+   "marketing",
+   "shipping"
+  ],
+  "471bdba4a5e71899ef450deccefdabd874ef32b169ef0fc97b4c3e1cda9a63ea": [
+   "shipping",
+   "marketing"
+  ],
+  "80897f954659960ffd4ea9eaa7c78b3f4ad3f922cfb01bf183b2a6b14da89b74": [
+   "catalog",
+   "billing"
+  ],
+  "8071bf876077e1a38276c898cec10b4bfcbe40849af06245486204afa4cbae59": [
+   "shipping",
+   "orders"
+  ],
+  "0a15fcb9ed379cb30cefa248aeaaf5cccd9690cd59db500e33912e303ec24f83": [
+   "shipping",
+   "returns"
+  ],
+  "88bb51e14e761612f70f00a5266dbf61e509c774d5c3cba1dbc9014a97f092ae": [
+   "inventory",
+   "support"
+  ],
+  "c450e845c3740bdc327955fe95c223922c7293258ac7863aee652cce5eb4deff": [
+   "marketing",
+   "orders"
+  ],
+  "0c15b7d599ab6e9dc108140b3ca564f69299fca01e19b044c54f239677660583": [
+   "inventory",
+   "catalog"
+  ],
+  "bf262c4adf3a6c29676d16995d8b0511c5def720b5658a02858f7917ed874fe3": [
+   "returns",
+   "inventory"
+  ],
+  "a15a2379d5e9acacea68ffccf5b2be6515072106dd2a9c6e1136c9c64a086029": [
+   "billing",
+   "returns"
+  ],
+  "740de0d9373ba00eba640607e1d51b6036d3e86d3913816a7472a84beef088ca": [
+   "orders",
+   "marketing"
+  ],
+  "d3ccc93c67b356f2309fc9dd92a5c82009bc8b2a2dc26c4d12214ada62fb8b45": [
+   "returns",
+   "billing"
+  ],
+  "376c3a2e86cf3397d7951d0ba7bf315d99470fdc44aaeb3632ddd62424c43e19": [
+   "marketing",
+   "returns"
+  ],
+  "811cf02506d4b67887ef6fe749319e6adef9aba1a83bd738a459767d53efd935": [
+   "support",
+   "inventory"
+  ],
+  "df2fea260fb0c4b57d435a79c0c09f71ffce27fdfcb6caf6c035d6d1e1e88507": [
+   "shipping",
+   "marketing"
+  ],
+  "d292169fd9bd028bcb5878155d4bdb6bf7d2618c6882f5b4f091d326328457ee": [
+   "customers",
+   "support"
+  ],
+  "73a2d909db254b0ab7529d0369dc2bacca4eb3fcff318acd53cc27e8a37868f5": [
+   "billing",
+   "orders"
+  ],
+  "5c65449f1502c13e6aba52abd078144684cdfd0dfdee44a7f803a529f334a5e0": [
+   "inventory",
+   "support"
+  ],
+  "0e9f2345d9b816759ee4e071381d3a02088c1d5f3b267493419f789d01178198": [
+   "billing",
+   "returns"
+  ],
+  "603226f54b581ce2acec409345bf9aabaeba10cbb2e9961b7f57e550b770082e": [
+   "shipping",
+   "returns"
+  ],
+  "01aecfcc105e5b85376d08940b4772ce33dffdb5a632419fe7e0c25ab15c1940": [
+   "returns",
+   "inventory"
+  ],
+  "10ee3d3d2c298c8f5519654c345ae64823f2775dd1c7ed4c8fb297722047db54": [
+   "marketing",
+   "support"
+  ],
+  "c799fa56b8899e93fa7aba2caf57cb417ba2f2de11e882a3025ae845df4e04aa": [
+   "catalog",
+   "inventory"
+  ],
+  "cc36a7daa8e62a54d65b728f2f205ce703a3cd7eccecc32ca984184369320bfa": [
+   "orders",
+   "returns"
+  ],
+  "d86a45b852292322b2cdf143043748a994b10274659606989262ee8ea9bbf04f": [
+   "inventory",
+   "returns"
+  ],
+  "9cb76c95e26d6dac9e6687ebc55f40f65c95b85c6dfbf369deb976ec4eb823b7": [
+   "inventory",
+   "marketing"
+  ],
+  "61da1efd1ad7d1c92ef637def8e7d8f036e7fd5f005ac72f9accbacf25ac9fee": [
+   "shipping",
+   "inventory"
+  ],
+  "b8cb0aeabfc67d1c9eb7b934d4fb58b6f9f82fd7f426094f6a96f6f50b618fc2": [
+   "marketing",
+   "inventory"
+  ],
+  "e34aa45cace240d92b8ded8c3911921e77fe0dc3b910c04ccb65ca05cdac764b": [
+   "orders",
+   "returns"
+  ],
+  "e0d2366f04cd3eb1156843e87bcd4852b94d752a49f4f3e86b82b0907dbc4751": [
+   "billing",
+   "customers"
+  ],
+  "d6cf86474825a692a239b92a4826f3b90ee77b6022e91b4fdfa85e97439cd62e": [
+   "catalog",
+   "orders"
+  ],
+  "cf83c93971f612d2d0eb057738a89e53cfeb6c100c86f1a088ccd4d00554601d": [
+   "support",
+   "inventory"
+  ],
+  "8f0e8ead7f670a31666aade2aaf675cdcd812f8a88962c0a6c2da6efecd79dbf": [
+   "orders",
+   "inventory"
+  ],
+  "e60c693656f9d23d9dd1834c509abad4bc849515fd1f8f7c70554ffdd2fd9fa2": [
+   "billing",
+   "orders"
+  ],
+  "20095b4a9a6295f5132379cf8b9c55ba2cef67c56f8fc43119f8d3d987c96084": [
+   "analytics",
+   "returns"
+  ],
+  "87c7da2245d48dc29482d23cdc7f50097f0d7b3636a50a2b0d5da5ba4dfbed3e": [
+   "returns",
+   "billing"
+  ],
+  "f27c89ad3efc35fece774c840c7a6aa1cd15db9b680cd743aa27e697449cc080": [
+   "billing",
+   "inventory"
+  ],
+  "b87cd4501e0c8c72cadeeb82656ac2ca1f2f2e803a4f302f221419132e090e90": [
+   "support",
+   "marketing"
+  ],
+  "b33f5fdaa468fd9475dc021506498965c7aac0783b7a105ab036c0af72f4345c": [
+   "inventory",
+   "catalog"
+  ],
+  "f0d279de03d11a6d3f5fb44bd9ace7b45dbc9b6720755b4faa92d109a161a881": [
+   "billing",
+   "analytics"
+  ],
+  "971504d89d9e458b5ca15384e298489f6e6555e843bd6f6aca1bcf406bc85813": [
+   "returns",
+   "analytics"
+  ],
+  "fe4b6b6e3335432996ab5eec6f5923156f3e4477c7fb26399dc47cd8c0dda0d9": [
+   "shipping",
+   "orders"
+  ],
+  "4a727ac8c1f8255a2314d7b5d8a582e15f113f4712aa612c323fc654e10463d7": [
+   "inventory",
+   "catalog"
+  ],
+  "019fc10287af006e3b14ebeb28932edadb71cc0b8cb11069dc1222768f80cbba": [
+   "shipping",
+   "catalog"
+  ],
+  "724ebe8dba0aa22384573e853959200e7db4c978e52139b1089bc4ca52c83e8f": [
+   "billing",
+   "returns"
+  ],
+  "176d63d2306c274089821fa71b6571432380219f68202a6269c23ebb5aec4a63": [
+   "returns",
+   "inventory"
+  ],
+  "45c304f4c8c005e9b1e81e95427ccdbc36ac3c35f18e01c64b140a3b6ec075bb": [
+   "inventory",
+   "catalog"
+  ],
+  "3eb48ac59a5c1f301e2bbe3e82754902820c672efd1feef9dad5e98b8ea1b0b7": [
+   "support",
+   "inventory"
+  ]
+ }
+}
