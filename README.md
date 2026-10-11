@@ -50,6 +50,10 @@ uv run toolpick run --provider openai --catalog catalog.json --cases cases.json
 
 Without uv: `cd kit && python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && pip install --no-deps -e .`, then call `toolpick ...` directly.
 
+To run **our** test (100 tools, 329 cases) on your model or harness instead of your own cases, use
+`kit/examples/northstar-haiku/` (see [`kit/README.md`](kit/README.md#run-our-studys-full-test-on-your-model-or-harness)).
+To reproduce the study exactly, with its outcome grader, use `study/` (Groq or NVIDIA NIM providers).
+
 The run writes `report.md`, `results.json` and `results.csv`, covering success rate, selection precision and recall,
 tokens, latency and paired sign tests for each strategy. See [`kit/README.md`](kit/README.md) for the formats,
 providers, custom harness adapters, and how to read the results.
