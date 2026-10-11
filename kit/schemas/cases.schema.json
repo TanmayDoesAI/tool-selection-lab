@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "toolpick/cases.schema.json",
+  "title": "toolpick test cases",
+  "description": "Prompts with the tool selection a good agent should make.",
+  "type": "object",
+  "required": ["cases"],
+  "additionalProperties": false,
+  "$defs": {
+    "names": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "mocks": {
+      "type": "object",
+      "description": "tool name -> the result a call returns. Use {\"$sequence\": [r1, r2, ...]} for successive calls (the last repeats).",
+      "additionalProperties": true
+    }
+  },
+  "properties": {
+    "name": {"type": "string"},
+    "mocks": {"$ref": "#/$defs/mocks"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "prompt", "type", "expect"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "prompt": {"type": "string", "minLength": 1},
+          "type": {"enum": ["single", "multi-step", "unsupported", "ambiguous"]},
+          "category": {"type": "string"},
+          "notes": {"type": "string"},
+          "mocks": {"$ref": "#/$defs/mocks"},
+          "expect": {
+            "type": "object",
+            "required": ["tools"],
+            "additionalProperties": false,
+            "properties": {
+              "tools": {"$ref": "#/$defs/names", "description": "Tools the agent must call."},
+              "ordered": {"type": "boolean", "description": "If true, the tools must be called in this order (other calls may sit between them)."},
+              "allowed": {"$ref": "#/$defs/names", "description": "Extra tools the agent may call without penalty, e.g. lookups."},
+              "forbidden": {"$ref": "#/$defs/names", "description": "Near-miss tools that must not be called."},
+              "args": {
+                "type": "object",
+                "description": "tool name -> {argument: expected value}. \"*\" means present with any value. Strings compare case-insensitively.",
+                "additionalProperties": {"type": "object"}
+              }
+            }
+          }
+        },
+        "allOf": [
+          {"if": {"properties": {"type": {"const": "unsupported"}}}, "then": {"properties": {"expect": {"properties": {"tools": {"maxItems": 0}, "allowed": {"maxItems": 0}}}}}},
+          {"if": {"properties": {"type": {"const": "single"}}}, "then": {"properties": {"expect": {"properties": {"tools": {"minItems": 1, "maxItems": 1}}}}}},
+          {"if": {"properties": {"type": {"const": "multi-step"}}}, "then": {"properties": {"expect": {"properties": {"tools": {"minItems": 2}}}}}}
+        ]
+      }
+    }
+  }
+}

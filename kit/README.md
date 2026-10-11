@@ -1,0 +1,198 @@
+# toolpick: which tool-discovery approach works best for your agent?
+
+When an agent has many tools, you have to decide how it finds the right one. You can show it every tool, route by
+category first, retrieve a top-k shortlist, or let it search. Which works best depends on your model and your
+catalog. toolpick measures it on **your** tools and **your** prompts:
+
+1. you describe your tools (in any format) and write 20-30 test prompts, with help from the bundled skill;
+2. toolpick runs every prompt under each discovery strategy against your model;
+3. you get a report with the success rate, selection precision and recall, tokens, latency, and paired significance
+   tests for each strategy.
+
+Grading is at the selection level. Tool calls are not executed for real: each one returns a stub result
+(`{"ok": true}`, or one you supply), so multi-step flows can continue. toolpick checks whether the agent called the
+right tools with the right key arguments, avoided near-miss tools, and declined when it should.
+
+## Quick start
+
+```bash
+# 1. Install (Python 3.10+ and uv)
+cd kit && uv sync
+
+# 2. Make catalog.json and cases.json from whatever you have.
+#    Point your coding agent at skill/SKILL.md (Claude Code: copy it to .claude/skills/toolpick-cases/SKILL.md),
+#    then ask: "make toolpick inputs from my tools in ./tools.json, 24 cases".
+#    If you have OpenAI, Anthropic or MCP tool JSON, convert it directly:
+uv run toolpick convert my-tools.json -o catalog.json
+
+# 3. Validate
+uv run toolpick validate catalog.json cases.json
+
+# 4. Run. Check the setup offline first with --dry-run, then run against your model.
+uv run toolpick run --dry-run --catalog catalog.json --cases cases.json --out runs/dry
+uv run toolpick run --provider openai --catalog catalog.json --cases cases.json
+
+# 5. Read the report
+cat toolpick-runs/<model>/report.md
+```
+
+To try it now, use the worked example (15 tools from the study's retail catalog, 20 cases):
+
+```bash
+uv run toolpick run --dry-run --catalog examples/northstar-slice/catalog.json --cases examples/northstar-slice/cases.json --out runs/example
+```
+
+## Providers
+
+Each provider uses one API key, read from one environment variable. `--model` and `--base-url` override the
+defaults, as do `TOOLPICK_MODEL` and `TOOLPICK_BASE_URL`. The models below are examples; use the one your agent uses.
+
+| `--provider` | API key env var | Default base URL | Example model | Embeddings for semantic@k |
+|---|---|---|---|---|
+| `openai` | `OPENAI_API_KEY` | `https://api.openai.com/v1` | `gpt-4.1-mini` | `text-embedding-3-small` |
+| `anthropic` | `ANTHROPIC_API_KEY` | `https://api.anthropic.com/v1` | `claude-haiku-5-5` | none: add `--embed-provider openai` or `nim` |
+| `nim` (NVIDIA NIM) | `NIM_API_KEY` | `https://integrate.api.nvidia.com/v1` | `openai/gpt-oss-20b` | `nvidia/nemotron-3-embed-1b` |
+| `openai-compatible` | `TOOLPICK_API_KEY` (optional) | set `--base-url` | set `--model` | set `--embed-provider openai-compatible --embed-model ...` |
+
+**OpenAI**
+```bash
+export OPENAI_API_KEY=...
+uv run toolpick run --provider openai --model gpt-4.1-mini --catalog catalog.json --cases cases.json
+```
+
+**Anthropic (Claude, Messages API with native tool use)**
+```bash
+export ANTHROPIC_API_KEY=...
+uv run toolpick run --provider anthropic --model claude-haiku-5-5 --catalog catalog.json --cases cases.json
+# add semantic@k with embeddings from OpenAI or NIM:
+export OPENAI_API_KEY=...
+uv run toolpick run --provider anthropic --embed-provider openai --catalog catalog.json --cases cases.json
+```
+The Anthropic adapter sends no `temperature` (current Claude models reject non-default values) and passes the model's
+content blocks, including thinking blocks, back unchanged on the next turn.
+
+**NVIDIA NIM**
+```bash
+export NIM_API_KEY=...
+uv run toolpick run --provider nim --model openai/gpt-oss-20b --catalog catalog.json --cases cases.json
+```
+
+**Any OpenAI-compatible server** (Groq, Together, vLLM, Ollama, LM Studio ...)
+```bash
+uv run toolpick run --provider openai-compatible --base-url http://localhost:11434/v1 --model qwen3:8b \
+  --catalog catalog.json --cases cases.json
+```
+
+Useful options: `--strategies all keyword@5 hybrid`, `--k 10` (shortlist size), `--search-k 5` (results per search),
+`--category-limit 2`, `--max-steps 8`, `--repetitions 3`, `--concurrency 4`, `--timeout 120`, `--retries 6`,
+`--temperature 0|none`, `--mocks mocks.json`, `--out DIR`.
+
+**Reliability.** Requests that fail with 408, 409, 429 or 5xx, or that time out, are retried with exponential backoff
+(honouring `Retry-After`). Each finished job is appended to `results.jsonl` immediately, so if you rerun the same
+command it resumes and skips jobs that are already done. `--retry-errors` re-runs jobs that ended in `api_error`.
+Changing the catalog, cases, model or step limit for an existing `--out` is refused, so results are never mixed.
+Lower `--concurrency` if your provider limits requests per minute.
+
+## Strategies
+
+| Strategy | What the agent sees | Extra cost |
+|---|---|---|
+| `all` | every tool, every turn | the most input tokens |
+| `category` | the model first picks 1 to `--category-limit` categories; it then sees those categories' tools | one routing call |
+| `keyword@k` | BM25 top-k over tool name, description and parameters, chosen once from the request | none (local) |
+| `semantic@k` | embedding top-k, chosen once from the request | one embedding call per request |
+| `agent-search` | only a `search_tools` tool at first; each search adds the top `--search-k` matches | extra turns |
+| `hybrid` | a top-k shortlist up front (semantic if embeddings are configured, otherwise keyword) plus `search_tools` | shortlist plus any searches |
+
+`agent-search` and `hybrid` search with embeddings when they are configured and with BM25 when they are not. The
+report records which index was used. `category` is skipped if your catalog has no categories, and `semantic@k` is
+skipped if no embedding provider is set.
+
+## Formats
+
+The JSON schemas in `schemas/` are the reference. In short:
+
+**catalog.json**
+```json
+{"name": "My agent", "instructions": "optional system prompt",
+ "categories": {"billing": "Invoices, payments and refunds."},
+ "tools": [{"name": "refund_payment", "description": "Refund a captured payment ...",
+            "parameters": {"type": "object", "properties": {"invoice_id": {"type": "string"}, "amount": {"type": "number"}},
+                           "required": ["invoice_id", "amount"]},
+            "category": "billing"}]}
+```
+
+**cases.json**
+```json
+{"mocks": {"find_order_invoices": [{"invoice_id": "I1"}]},
+ "cases": [{"id": "damaged-refund", "type": "multi-step", "category": "billing",
+            "prompt": "Order O100 arrived damaged. Refund $12 of what the customer paid for it.",
+            "expect": {"tools": ["find_order_invoices", "refund_payment"], "ordered": true,
+                       "args": {"refund_payment": {"invoice_id": "I1", "amount": 12}},
+                       "allowed": ["get_order"], "forbidden": ["issue_store_credit"]}}]}
+```
+
+| Case type | Passes when |
+|---|---|
+| `single`, `multi-step` | every `expect.tools` entry is called with valid arguments (in order if `ordered`), the `args` checks hold, no `forbidden` tool is called, and the agent finishes with a reply. Extra calls lower precision but do not fail the case. |
+| `ambiguous` | as above, and the agent calls nothing outside `tools` + `allowed`, because it should ask |
+| `unsupported` | no tool call at all, and a reply |
+
+A call counts only if the tool was callable at that moment and its arguments pass the tool's JSON Schema. Tool results
+come from `mocks` (per case, then per file, then `--mocks`), with `{"ok": true}` as the default.
+`{"$sequence": [a, b]}` returns `a` on the first call and `b` on every later call.
+
+## Plug in your own harness
+
+If your agent is more than one model call (a LangGraph graph, an in-house SDK, a hosted agent), write an adapter with
+one method:
+
+```python
+from toolpick import Turn, ToolCall
+
+class MyAgent:
+    def step(self, messages: list[dict], tools: list[dict]) -> Turn:
+        # messages: [{'role': 'system'|'user', 'content'}, {'role': 'assistant', 'content', 'tool_calls': [ToolCall]},
+        #            {'role': 'tool', 'tool_call_id', 'name', 'content'}]
+        # tools:    [{'name', 'description', 'parameters'}]
+        ...
+        return Turn(tool_calls=[ToolCall(id="1", name="get_order", arguments={"order_id": "O1"})])  # or Turn(text="...")
+```
+
+```bash
+uv run toolpick run --agent my_agent.py:MyAgent --catalog catalog.json --cases cases.json
+```
+
+toolpick still controls discovery, mocked results, the step limit and grading, so every strategy is compared on the
+same terms. Return `input_tokens` and `output_tokens` in the `Turn` if you have them, so the report can compare cost.
+`examples/custom_agent.py` is a complete example. The built-in `OpenAIChat` and `AnthropicMessages` classes in
+`toolpick/agents.py` implement the same interface, so you can subclass them, for example to add your own system prompt
+or headers.
+
+## Reading the results
+
+`report.md` ranks the strategies by success rate, breaks results down by case type, and runs a paired sign test for
+each pair of strategies over the same cases. `results.json` has the same data in machine-readable form, and
+`results.csv` has one row per job with the tools called, what was missing or extra, the reason for any failure, and
+tokens.
+
+- **Treat ties as ties.** With 20-30 cases, a gap of one or two cases is noise. If the best strategy is not
+  significantly ahead (p >= 0.05), pick the cheapest one among the leaders, or add cases and run `--repetitions 3`.
+- **Failure reasons show what to fix.** `not_exposed` means discovery never showed the needed tool, so try a larger
+  `k`, better descriptions, or a search strategy. `missing_tool` or `forbidden_tool` means the tool was visible but the
+  model chose wrongly, so tighten the descriptions of similar tools. `acted_on_unsupported` and `acted_on_ambiguous`
+  are problems with the instructions, not with discovery.
+- **Tokens matter.** `all` can never miss a tool, but it costs the most input tokens on every turn, and a long tool
+  list can itself confuse a model. Shortlists cost far less, but they are only worth it if they do not miss tools.
+- **What the study suggests (guidance, not a guarantee).** The study in `../study` compares these strategies on a
+  100-tool catalog with several models; its numbers are in `../study/results`. Your catalog and model may behave
+  differently, which is why this kit measures rather than recommends. Two failure modes from the study are worth
+  checking for in your own results. A shortlist chosen once from the first message can miss the second tool of a
+  multi-step request that crosses categories. And agents given only a search tool sometimes search once and treat
+  the results as the whole catalog. Hybrid (a shortlist plus search) was designed to address both.
+
+## Development
+
+```bash
+uv run pytest -q   # offline: fake model, fake embeddings, mocked HTTP; no keys needed
+```

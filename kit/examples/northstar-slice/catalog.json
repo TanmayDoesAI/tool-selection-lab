@@ -1,0 +1,328 @@
+{
+  "name": "Northstar Retail (15-tool slice of the study catalog)",
+  "instructions": "You are the operations assistant for Northstar Retail, a fictional shop. Staff message you about orders, shipping, billing, customers and returns. Look things up with your tools instead of guessing, ask when a request is ambiguous, say plainly when no tool can do what is asked, and finish with a short reply.",
+  "categories": {
+    "orders": "Order records, line items, cancellation, delivery address, fulfillment holds and priorities.",
+    "shipping": "Parcel tracking, delivery forecasts, shipping labels, carriers, addresses and transport rates.",
+    "customers": "Customer identity, profile, contact information, loyalty points, store credit and consent.",
+    "billing": "Invoices, payment collection, financial refunds, balances, due dates and payment reminders.",
+    "returns": "Physical return authorization, labels, warehouse receipt, inspection, fees and exchanges."
+  },
+  "tools": [
+    {
+      "name": "get_order",
+      "description": "Read a full sales order by order ID.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "order id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "order_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "orders"
+    },
+    {
+      "name": "list_customer_orders",
+      "description": "Find all orders belonging to a customer.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "description": "customer id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "customer_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "orders"
+    },
+    {
+      "name": "set_order_address",
+      "description": "Change delivery address on an unshipped sales order, not a parcel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "order id",
+            "minLength": 1
+          },
+          "address": {
+            "type": "string",
+            "description": "address",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "order_id",
+          "address"
+        ],
+        "additionalProperties": false
+      },
+      "category": "orders"
+    },
+    {
+      "name": "cancel_order",
+      "description": "Cancel an unshipped order; does not issue a financial refund.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "order id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "order_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "orders"
+    },
+    {
+      "name": "find_order_shipments",
+      "description": "Find parcels attached to a sales order.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "order id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "order_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "shipping"
+    },
+    {
+      "name": "track_parcel",
+      "description": "Read delivery status and carrier tracking number.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "shipment_id": {
+            "type": "string",
+            "description": "shipment id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "shipment_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "shipping"
+    },
+    {
+      "name": "set_parcel_address",
+      "description": "Redirect an existing parcel; does not change order billing address.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "shipment_id": {
+            "type": "string",
+            "description": "shipment id",
+            "minLength": 1
+          },
+          "address": {
+            "type": "string",
+            "description": "address",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "shipment_id",
+          "address"
+        ],
+        "additionalProperties": false
+      },
+      "category": "shipping"
+    },
+    {
+      "name": "find_order_invoices",
+      "description": "Find billing invoices linked to a sales order.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "order id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "order_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "billing"
+    },
+    {
+      "name": "get_invoice_balance",
+      "description": "Compute remaining amount payable.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "invoice_id": {
+            "type": "string",
+            "description": "invoice id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "invoice_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "billing"
+    },
+    {
+      "name": "refund_payment",
+      "description": "Refund a captured payment, not authorize a physical return or store credit.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "invoice_id": {
+            "type": "string",
+            "description": "invoice id",
+            "minLength": 1
+          },
+          "amount": {
+            "type": "number",
+            "description": "amount",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "invoice_id",
+          "amount"
+        ],
+        "additionalProperties": false
+      },
+      "category": "billing"
+    },
+    {
+      "name": "search_customers",
+      "description": "Search names case-insensitively; names may identify multiple people.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "name",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      },
+      "category": "customers"
+    },
+    {
+      "name": "set_customer_address",
+      "description": "Change customer default address, not an existing order or parcel.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "description": "customer id",
+            "minLength": 1
+          },
+          "address": {
+            "type": "string",
+            "description": "address",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "customer_id",
+          "address"
+        ],
+        "additionalProperties": false
+      },
+      "category": "customers"
+    },
+    {
+      "name": "issue_store_credit",
+      "description": "Add store credit in dollars, without refunding a payment.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "customer_id": {
+            "type": "string",
+            "description": "customer id",
+            "minLength": 1
+          },
+          "amount": {
+            "type": "number",
+            "description": "amount",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "customer_id",
+          "amount"
+        ],
+        "additionalProperties": false
+      },
+      "category": "customers"
+    },
+    {
+      "name": "authorize_return",
+      "description": "Approve a requested physical return; does not refund money.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "return_id": {
+            "type": "string",
+            "description": "return id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "return_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "returns"
+    },
+    {
+      "name": "get_return_refund_quote",
+      "description": "Calculate retail return value less restocking fee; does not issue refund.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "return_id": {
+            "type": "string",
+            "description": "return id",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "return_id"
+        ],
+        "additionalProperties": false
+      },
+      "category": "returns"
+    }
+  ]
+}

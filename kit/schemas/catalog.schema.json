@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "toolpick/catalog.schema.json",
+  "title": "toolpick tool catalog",
+  "description": "The tools your agent can call, in one provider-neutral format.",
+  "type": "object",
+  "required": ["tools"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {"type": "string", "description": "A label for this catalog, shown in reports."},
+    "instructions": {"type": "string", "description": "The system prompt your agent normally runs with. Optional; a neutral default is used otherwise."},
+    "categories": {
+      "type": "object",
+      "description": "Optional category name -> one-line description. Needed for the category strategy to route well.",
+      "additionalProperties": {"type": "string"}
+    },
+    "tools": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "parameters"],
+        "additionalProperties": false,
+        "properties": {
+          "name": {"type": "string", "pattern": "^[A-Za-z0-9_-]{1,64}$"},
+          "description": {"type": "string", "minLength": 1},
+          "parameters": {
+            "type": "object",
+            "description": "A JSON Schema for the arguments; its top-level type must be object.",
+            "required": ["type"],
+            "properties": {"type": {"const": "object"}}
+          },
+          "category": {"type": "string"},
+          "mutates": {"type": "boolean", "description": "Optional: true if the tool changes state. Informational only."}
+        }
+      }
+    }
+  }
+}
