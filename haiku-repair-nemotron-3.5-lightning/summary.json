@@ -1,0 +1,434 @@
+{
+  "run_id": "dd307514a7b44f12992b021e01e54eb1",
+  "status": "completed",
+  "planned": 17,
+  "recorded": 17,
+  "missing": 0,
+  "api_requests": 119,
+  "tokens": {
+    "input": 192502,
+    "output": 12150
+  },
+  "unknown_usage_attempts": 44,
+  "strategies": {
+    "all": {
+      "completed": 2,
+      "recorded": 2,
+      "planned": 2,
+      "completion_rate_recorded": 1.0,
+      "median_seconds": 39.37800086349944,
+      "input_tokens": 73655,
+      "output_tokens": 786,
+      "shortlist_sizes": [
+        100,
+        100
+      ],
+      "failures": {}
+    },
+    "category": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0,
+      "completion_rate_recorded": null,
+      "median_seconds": null,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "shortlist_sizes": [],
+      "failures": {}
+    },
+    "category-laya": {
+      "completed": 1,
+      "recorded": 2,
+      "planned": 2,
+      "completion_rate_recorded": 0.5,
+      "median_seconds": 57.04488206549922,
+      "input_tokens": 15670,
+      "output_tokens": 1311,
+      "shortlist_sizes": [
+        20,
+        20
+      ],
+      "failures": {
+        "retrieval_failure": 1,
+        "wrong_state": 1,
+        "missing_facts": 1
+      }
+    },
+    "semantic@10": {
+      "completed": 0,
+      "recorded": 2,
+      "planned": 2,
+      "completion_rate_recorded": 0.0,
+      "median_seconds": 16.776767217500492,
+      "input_tokens": 6360,
+      "output_tokens": 1527,
+      "shortlist_sizes": [
+        10,
+        10
+      ],
+      "failures": {
+        "retrieval_failure": 2,
+        "missing_facts": 1,
+        "wrong_state": 1
+      }
+    },
+    "keyword@10": {
+      "completed": 1,
+      "recorded": 3,
+      "planned": 3,
+      "completion_rate_recorded": 0.3333333333333333,
+      "median_seconds": 20.92025514799934,
+      "input_tokens": 15225,
+      "output_tokens": 1616,
+      "shortlist_sizes": [
+        10,
+        10,
+        10
+      ],
+      "failures": {
+        "retrieval_failure": 3,
+        "bad_arguments": 1,
+        "execution_failure": 1,
+        "missing_facts": 1,
+        "wrong_state": 1
+      }
+    },
+    "semantic-nim@10": {
+      "completed": 1,
+      "recorded": 1,
+      "planned": 1,
+      "completion_rate_recorded": 1.0,
+      "median_seconds": 45.1602587870002,
+      "input_tokens": 4718,
+      "output_tokens": 475,
+      "shortlist_sizes": [
+        10
+      ],
+      "failures": {
+        "retrieval_failure": 1
+      }
+    },
+    "agent-search": {
+      "completed": 3,
+      "recorded": 3,
+      "planned": 3,
+      "completion_rate_recorded": 1.0,
+      "median_seconds": 80.32937047100131,
+      "input_tokens": 34825,
+      "output_tokens": 2032,
+      "shortlist_sizes": [
+        10,
+        13,
+        9
+      ],
+      "failures": {}
+    },
+    "agent-search-kw": {
+      "completed": 1,
+      "recorded": 3,
+      "planned": 3,
+      "completion_rate_recorded": 0.3333333333333333,
+      "median_seconds": 108.19464367600085,
+      "input_tokens": 35139,
+      "output_tokens": 3882,
+      "shortlist_sizes": [
+        9,
+        12,
+        11
+      ],
+      "failures": {
+        "incorrect_selection": 1,
+        "missing_facts": 1,
+        "retrieval_failure": 2,
+        "wrong_state": 1
+      }
+    },
+    "hybrid": {
+      "completed": 1,
+      "recorded": 1,
+      "planned": 1,
+      "completion_rate_recorded": 1.0,
+      "median_seconds": 19.574598135999622,
+      "input_tokens": 6605,
+      "output_tokens": 491,
+      "shortlist_sizes": [
+        10
+      ],
+      "failures": {
+        "retrieval_failure": 1
+      }
+    }
+  },
+  "task_types": {
+    "all/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "all/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "all/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "all/multi_step": {
+      "completed": 1,
+      "recorded": 1,
+      "planned": 1
+    },
+    "all/confusable": {
+      "completed": 1,
+      "recorded": 1,
+      "planned": 1
+    },
+    "all/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category/multi_step": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category-laya/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category-laya/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category-laya/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category-laya/multi_step": {
+      "completed": 1,
+      "recorded": 2,
+      "planned": 2
+    },
+    "category-laya/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "category-laya/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic@10/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic@10/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic@10/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic@10/multi_step": {
+      "completed": 0,
+      "recorded": 2,
+      "planned": 2
+    },
+    "semantic@10/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic@10/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "keyword@10/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "keyword@10/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "keyword@10/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "keyword@10/multi_step": {
+      "completed": 1,
+      "recorded": 3,
+      "planned": 3
+    },
+    "keyword@10/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "keyword@10/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic-nim@10/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic-nim@10/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic-nim@10/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic-nim@10/multi_step": {
+      "completed": 1,
+      "recorded": 1,
+      "planned": 1
+    },
+    "semantic-nim@10/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "semantic-nim@10/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search/multi_step": {
+      "completed": 3,
+      "recorded": 3,
+      "planned": 3
+    },
+    "agent-search/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search-kw/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search-kw/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search-kw/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search-kw/multi_step": {
+      "completed": 1,
+      "recorded": 3,
+      "planned": 3
+    },
+    "agent-search-kw/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "agent-search-kw/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "hybrid/direct": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "hybrid/paraphrase": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "hybrid/clarification": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "hybrid/multi_step": {
+      "completed": 1,
+      "recorded": 1,
+      "planned": 1
+    },
+    "hybrid/confusable": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    },
+    "hybrid/unsupported": {
+      "completed": 0,
+      "recorded": 0,
+      "planned": 0
+    }
+  }
+}

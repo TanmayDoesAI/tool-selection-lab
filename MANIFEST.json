@@ -1,0 +1,57 @@
+{
+ "snapshot_utc": "2026-10-11T17:04:03+00:00",
+ "files": {
+  "haiku-core-deepseek-v4.1-flash/attempts.jsonl": {
+   "lines": 4,
+   "sha256": "d3225bc8a8e5a232297d28927bd7ab9c096567265f495fbaa042384064d3a34f"
+  },
+  "haiku-core-glm-5.3-flash/attempts.jsonl": {
+   "lines": 10263,
+   "sha256": "867e0ff53095519a5751a774db9d0ed3a2d68c6c2fa53981ba2f869881a2f9d0"
+  },
+  "haiku-core-glm-5.3-flash/results.jsonl": {
+   "lines": 1389,
+   "sha256": "43fa969e8d746d21d14a963c6c9b50156fbe1b20a1b478eb4ddf6c12afc44d6d"
+  },
+  "haiku-core-gpt-oss-20b/attempts.jsonl": {
+   "lines": 15369,
+   "sha256": "77dc8eaf40cba4b57275e1413fbde49fc42f5528ecab01b408f725dcfda3dd17"
+  },
+  "haiku-core-gpt-oss-20b/results.jsonl": {
+   "lines": 2961,
+   "sha256": "12d8f2099c05c7408074ae3dd87ecadc31588ab8f11c3a4986bca67db4390de7"
+  },
+  "haiku-core-muse-glimmer-30b/attempts.jsonl": {
+   "lines": 4251,
+   "sha256": "d912964cc3bd833a2b244d667a8639dc8beaae65963c53b7c1aaf5f7d5fceddd"
+  },
+  "haiku-core-muse-glimmer-30b/results.jsonl": {
+   "lines": 809,
+   "sha256": "89efbbb93ff3d53e1e52037b463f951fa694ed04d7f1f1cf8c0270f989b9f40d"
+  },
+  "haiku-core-nemotron-3-super/attempts.jsonl": {
+   "lines": 35710,
+   "sha256": "533404dca5bfc60819a81982e8ee94334e3c6deb30fe5f76ddb39f0c5139de37"
+  },
+  "haiku-core-nemotron-3-super/results.jsonl": {
+   "lines": 2961,
+   "sha256": "d33ee0a83df94c2ebf217246e57055f6e05d4d695d8dff3a19cf21cc8837bf88"
+  },
+  "haiku-core-nemotron-3.5-lightning/attempts.jsonl": {
+   "lines": 23379,
+   "sha256": "0964729624ecc4029cb7eb0516de503bc7f26518537ed27a78f75f1903b23248"
+  },
+  "haiku-core-nemotron-3.5-lightning/results.jsonl": {
+   "lines": 2961,
+   "sha256": "244e311fd0dcddcb3a27f3dbf6ab78b6add882c3b53676d05a431000c041e8ee"
+  },
+  "haiku-repair-nemotron-3.5-lightning/attempts.jsonl": {
+   "lines": 282,
+   "sha256": "12084c782886754c18f5a7fdc9a5ec8cce217fa35c9da8c9dbe880115c3b696d"
+  },
+  "haiku-repair-nemotron-3.5-lightning/results.jsonl": {
+   "lines": 17,
+   "sha256": "61636dcf8bc12aec5707197110eda4aa7767f3e5363b3dde6177e1136f81c1c8"
+  }
+ }
+}
