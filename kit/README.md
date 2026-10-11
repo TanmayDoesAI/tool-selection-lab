@@ -70,9 +70,9 @@ defaults, as do `TOOLPICK_MODEL` and `TOOLPICK_BASE_URL`. The models below are e
 | `--provider` | API key env var | Default base URL | Example model | Embeddings for semantic@k |
 |---|---|---|---|---|
 | `openai` | `OPENAI_API_KEY` | `https://api.openai.com/v1` | `gpt-4.1-mini` | `text-embedding-3-small` |
-| `anthropic` | `ANTHROPIC_API_KEY` | `https://api.anthropic.com/v1` | `claude-haiku-5-5` | none: add `--embed-provider openai` or `nim` |
+| `anthropic` | `ANTHROPIC_API_KEY` | `https://api.anthropic.com/v1` | `claude-haiku-5-5` | OpenAI `text-embedding-3-small` if `OPENAI_API_KEY` is set (see [Embeddings](#embeddings)) |
 | `nim` (NVIDIA NIM) | `NIM_API_KEY` | `https://integrate.api.nvidia.com/v1` | `openai/gpt-oss-20b` | `nvidia/nemotron-3-embed-1b` |
-| `openai-compatible` | `TOOLPICK_API_KEY` (optional) | set `--base-url` | set `--model` | set `--embed-provider openai-compatible --embed-model ...` |
+| `openai-compatible` | `TOOLPICK_API_KEY` (optional) | set `--base-url` | set `--model` | OpenAI if `OPENAI_API_KEY` is set, or `--embed-provider openai-compatible --embed-model ...` |
 
 **OpenAI**
 ```bash
@@ -84,9 +84,9 @@ uv run toolpick run --provider openai --model gpt-4.1-mini --catalog catalog.jso
 ```bash
 export ANTHROPIC_API_KEY=...
 uv run toolpick run --provider anthropic --model claude-haiku-5-5 --catalog catalog.json --cases cases.json
-# add semantic@k with embeddings from OpenAI or NIM:
+# semantic@k uses OpenAI embeddings automatically when OPENAI_API_KEY is also set:
 export OPENAI_API_KEY=...
-uv run toolpick run --provider anthropic --embed-provider openai --catalog catalog.json --cases cases.json
+uv run toolpick run --provider anthropic --catalog catalog.json --cases cases.json
 ```
 The Anthropic adapter sends no `temperature` (current Claude models reject non-default values) and passes the model's
 content blocks, including thinking blocks, back unchanged on the next turn.
@@ -112,6 +112,28 @@ Useful options: `--strategies all keyword@5 hybrid`, `--k 10` (shortlist size), 
 command it resumes and skips jobs that are already done. `--retry-errors` re-runs jobs that ended in `api_error`.
 Changing the catalog, cases, model or step limit for an existing `--out` is refused, so results are never mixed.
 Lower `--concurrency` if your provider limits requests per minute.
+
+### Embeddings
+
+`semantic@k`, and the search behind `agent-search`/`hybrid`, need an embedding model. OpenAI embeddings are the default
+for most setups:
+
+| Situation | Embeddings used (`--embed-provider auto`) |
+|---|---|
+| `--provider openai` | OpenAI `text-embedding-3-small` |
+| `--provider nim` | NIM `nvidia/nemotron-3-embed-1b` |
+| `--provider anthropic`, `openai-compatible` or `--agent` | OpenAI if `OPENAI_API_KEY` is set, else NIM if `NIM_API_KEY` is set, else none |
+
+Override any of this with `--embed-provider openai|nim|openai-compatible|none`, `--embed-model` (e.g.
+`text-embedding-3-large`) and `--embed-dimensions` (shortened `text-embedding-3` vectors, e.g. `512`). Any
+OpenAI-compatible `/embeddings` server works with `--embed-provider openai-compatible --embed-base-url ...`. Tool
+embeddings are cached on disk per model, so re-runs only embed new requests. With no embeddings, `semantic@k` is
+skipped, and agent-search and hybrid fall back to BM25 search.
+
+```bash
+uv run toolpick run --provider anthropic --embed-provider openai --embed-model text-embedding-3-large \
+  --catalog catalog.json --cases cases.json
+```
 
 ## Strategies
 

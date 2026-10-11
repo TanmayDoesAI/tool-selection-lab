@@ -33,14 +33,15 @@ def normalise(v):
 
 class Embedder:
     """Embeddings from OpenAI, NVIDIA NIM or any OpenAI-compatible /embeddings endpoint, cached on disk by text."""
-    def __init__(self,provider='openai',model=None,base_url=None,cache_dir='.toolpick-cache',timeout=60,retries=6,transport=None,sleep=None):
+    def __init__(self,provider='openai',model=None,base_url=None,cache_dir='.toolpick-cache',timeout=60,retries=6,transport=None,sleep=None,dimensions=None):
         p=PROVIDERS.get(provider,{});model=model or p.get('embed_model')
         if not model:raise ValueError(f'{provider}: set --embed-model')
         self.s=provider_settings(provider,model,base_url)
         self.provider=provider;self.model=self.s['model'];self.url=self.s['base_url']+'/embeddings'
         self.headers={'Authorization':f'Bearer {self.s["api_key"]}'} if self.s['api_key'] else {}
         self.http=httpx.Client(timeout=timeout,transport=transport);self.retry={'retries':retries,**({'sleep':sleep} if sleep else {})}
-        self.lock=threading.Lock();self.path=Path(cache_dir)/f'embeddings-{hashlib.sha256(f"{self.url}|{self.model}".encode()).hexdigest()[:12]}.jsonl'
+        self.dimensions=dimensions
+        self.lock=threading.Lock();self.path=Path(cache_dir)/f'embeddings-{hashlib.sha256(f"{self.url}|{self.model}|{dimensions or ""}".encode()).hexdigest()[:12]}.jsonl'
         self.cache={}
         if self.path.exists():
             for line in self.path.read_text().splitlines():
@@ -53,6 +54,7 @@ class Embedder:
         for i in range(0,len(todo),32):
             batch=todo[i:i+32];body={'model':self.model,'input':[t for _,t in batch]}
             if self.provider=='nim':body.update(input_type=kind,truncate='END')
+            if self.dimensions:body['dimensions']=self.dimensions
             data=post_json(self.http,self.url,self.headers,body,**self.retry)
             vecs=[normalise(d['embedding']) for d in sorted(data['data'],key=lambda d:d['index'])]
             with self.lock:

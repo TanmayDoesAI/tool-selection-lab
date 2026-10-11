@@ -179,3 +179,17 @@ def test_provider_settings_and_embedder(monkeypatch,tmp_path):
     assert abs(sum(x*x for x in a[1])-1)<1e-9
     again=Embedder('nim',cache_dir=tmp_path,transport=httpx.MockTransport(handler));again.embed(['tool one'],'passage');assert len(sent)==1  # disk cache hit
     again.embed(['tool one'],'query');assert sent[1]['input_type']=='query'
+
+def test_openai_embeddings_auto_and_dimensions(monkeypatch,tmp_path):
+    from toolpick.cli import auto_embed_provider
+    assert auto_embed_provider('openai',env={})=='openai' and auto_embed_provider('nim',env={})=='nim'
+    assert auto_embed_provider('anthropic',env={'OPENAI_API_KEY':'k','NIM_API_KEY':'n'})=='openai'  # OpenAI embeddings preferred
+    assert auto_embed_provider('openai',agent='my.py:A',env={'OPENAI_API_KEY':'k'})=='openai'
+    assert auto_embed_provider('anthropic',env={'NIM_API_KEY':'n'})=='nim' and auto_embed_provider('anthropic',env={})=='none'
+    monkeypatch.setenv('OPENAI_API_KEY','sk-test');sent=[]
+    def handler(request):
+        b=json.loads(request.content);sent.append((str(request.url),b))
+        return httpx.Response(200,json={'data':[{'index':i,'embedding':[1.0,float(i)]} for i in range(len(b['input']))]})
+    emb=Embedder('openai',cache_dir=tmp_path,transport=httpx.MockTransport(handler),dimensions=256)
+    emb.embed(['tool one'],'passage');url,b=sent[0]
+    assert url=='https://api.openai.com/v1/embeddings' and b['model']=='text-embedding-3-small' and b['dimensions']==256 and 'input_type' not in b

@@ -25,9 +25,16 @@ def cmd_validate(a):
 def embedder_for(a):
     if a.dry_run:return HashEmbedder()
     p=a.embed_provider
-    if p=='auto':p=a.provider if a.provider in ('openai','nim') and not a.agent else 'none'
+    if p=='auto':p=auto_embed_provider(a.provider,a.agent)
     if p=='none':return None
-    return Embedder(p,a.embed_model,a.embed_base_url,cache_dir=Path(a.out)/'.cache',timeout=a.timeout,retries=a.retries)
+    return Embedder(p,a.embed_model,a.embed_base_url,cache_dir=Path(a.out)/'.cache',timeout=a.timeout,retries=a.retries,dimensions=a.embed_dimensions)
+
+def auto_embed_provider(provider,agent=None,env=os.environ):
+    """Same provider when it serves embeddings; otherwise OpenAI embeddings whenever OPENAI_API_KEY is set, then NIM."""
+    if provider in ('openai','nim') and not agent:return provider
+    if env.get('OPENAI_API_KEY'):return 'openai'
+    if env.get('NIM_API_KEY'):return 'nim'
+    return 'none'
 
 def cmd_run(a):
     cat,cases,warnings=formats.load(a.catalog,a.cases)
@@ -78,8 +85,9 @@ def main(argv=None):
     r.add_argument('--category-limit',type=int,default=2);r.add_argument('--max-steps',type=int,default=8);r.add_argument('--repetitions',type=int,default=1)
     r.add_argument('--concurrency',type=int,default=4);r.add_argument('--timeout',type=float,default=120);r.add_argument('--retries',type=int,default=6)
     r.add_argument('--temperature',help='number, or "none" to omit it (default: 0 for NIM/compatible, omitted for OpenAI and Anthropic)')
-    r.add_argument('--embed-provider',default='auto',choices=['auto','none','openai','nim','openai-compatible'],help='embeddings for semantic@k (auto: same as --provider when it is openai or nim)')
-    r.add_argument('--embed-model');r.add_argument('--embed-base-url')
+    r.add_argument('--embed-provider',default='auto',choices=['auto','none','openai','nim','openai-compatible'],help='embeddings for semantic@k and search (auto: --provider if it is openai or nim, else OpenAI when OPENAI_API_KEY is set, else NIM, else none)')
+    r.add_argument('--embed-model',help='default: text-embedding-3-small (openai), nvidia/nemotron-3-embed-1b (nim)');r.add_argument('--embed-base-url')
+    r.add_argument('--embed-dimensions',type=int,help='shorten OpenAI text-embedding-3 vectors (e.g. 512); other models ignore it unless they support `dimensions`')
     r.add_argument('--mocks',help='JSON file: tool name -> stub result (default {"ok": true})')
     r.add_argument('--retry-errors',action='store_true',help='on resume, re-run jobs that ended in api_error');r.add_argument('--seed',type=int,default=0)
     rp=sub.add_parser('report',help='rebuild report.md / results.json / results.csv for a run directory');rp.add_argument('run_dir')
