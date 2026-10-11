@@ -18,6 +18,8 @@ right tools with the right key arguments, avoided near-miss tools, and declined 
 ```bash
 # 1. Install (Python 3.10+ and uv)
 cd kit && uv sync
+#    or with pip: python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && pip install --no-deps -e .
+#    (then call `toolpick ...` directly instead of `uv run toolpick ...`)
 
 # 2. Make catalog.json and cases.json from whatever you have.
 #    Point your coding agent at skill/SKILL.md (Claude Code: copy it to .claude/skills/toolpick-cases/SKILL.md),

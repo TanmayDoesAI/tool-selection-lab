@@ -56,6 +56,16 @@ uv run --frozen pytest -q                 # offline; HTTP is mocked
 uv run --frozen toolbench offline         # every reference trace passes the real grader, no inference
 ```
 
+Without uv, pip works with the pinned `requirements.txt`, which is exported from `uv.lock`:
+
+```bash
+cd study
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt -r requirements-dev.txt   # dev = pytest, playwright
+pip install --no-deps -e .
+toolbench validate && pytest -q && toolbench offline
+```
+
 To run one model through all nine arms on the 329 haiku tasks, export your NVIDIA NIM API key as `NIM_API_KEY` and run:
 
 ```bash

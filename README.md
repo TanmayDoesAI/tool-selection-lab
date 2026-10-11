@@ -30,6 +30,8 @@ uv run --frozen toolbench benchmark --provider nim --model openai/gpt-oss-20b --
 uv run --frozen python scripts/analyze.py runs/haiku-core-gpt-oss-20b --out analysis.json
 ```
 
+Without uv: `python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt -r requirements-dev.txt && pip install --no-deps -e .`, then run the same commands without `uv run --frozen`.
+
 The protocol, including what was decided before any results were seen, is in
 [`study/docs/preregistration.md`](study/docs/preregistration.md). [`study/README.md`](study/README.md) covers the
 details: the task sets, grading, repair runs and limitations.
@@ -45,6 +47,8 @@ uv run toolpick run --dry-run --catalog catalog.json --cases cases.json --out ru
 export OPENAI_API_KEY=...     # or ANTHROPIC_API_KEY with --provider anthropic, or NIM_API_KEY with --provider nim
 uv run toolpick run --provider openai --catalog catalog.json --cases cases.json
 ```
+
+Without uv: `cd kit && python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && pip install --no-deps -e .`, then call `toolpick ...` directly.
 
 The run writes `report.md`, `results.json` and `results.csv`, covering success rate, selection precision and recall,
 tokens, latency and paired sign tests for each strategy. See [`kit/README.md`](kit/README.md) for the formats,
