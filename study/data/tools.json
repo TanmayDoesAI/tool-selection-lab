@@ -1,0 +1,2448 @@
+{
+  "categories": {
+    "orders": "Order records, line items, cancellation, delivery address, fulfillment holds and priorities.",
+    "inventory": "Warehouse quantities, available versus reserved stock, replenishment, allocation and stock receipts.",
+    "shipping": "Parcel tracking, delivery forecasts, shipping labels, carriers, addresses and transport rates.",
+    "customers": "Customer identity, profile, contact information, loyalty points, store credit and consent.",
+    "billing": "Invoices, payment collection, financial refunds, balances, due dates and payment reminders.",
+    "support": "Helpdesk tickets, replies, assignments, escalation, SLA and customer issue histories.",
+    "marketing": "Campaigns, audience segments, coupons, budget, engagement and attribution.",
+    "catalog": "Product descriptions, prices, costs, classifications, weights, suppliers and active listings.",
+    "returns": "Physical return authorization, labels, warehouse receipt, inspection, fees and exchanges.",
+    "analytics": "Computed retail sales, margins, payment exposure, inventory health and operational summaries."
+  },
+  "tools": [
+    {
+      "category": "orders",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_order",
+        "description": "Read a full sales order by order ID.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_customer_orders",
+        "description": "Find all orders belonging to a customer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_order_total",
+        "description": "Read the billed sales total, not an outstanding invoice balance.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_order_items",
+        "description": "Read ordered SKUs and quantities.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "cancel_order",
+        "description": "Cancel an unshipped order; does not issue a financial refund.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "hold_order",
+        "description": "Pause fulfillment by placing an order on hold.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "release_order_hold",
+        "description": "Resume fulfillment of a held order.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_order_address",
+        "description": "Change delivery address on an unshipped sales order, not a parcel.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            },
+            "address": {
+              "type": "string",
+              "description": "address",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id",
+            "address"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_order_priority",
+        "description": "Set warehouse fulfillment priority.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            },
+            "priority": {
+              "type": "string",
+              "enum": [
+                "normal",
+                "urgent"
+              ]
+            }
+          },
+          "required": [
+            "order_id",
+            "priority"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "orders",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "add_order_note",
+        "description": "Attach an internal sales-order note.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            },
+            "note": {
+              "type": "string",
+              "description": "note",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id",
+            "note"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_stock",
+        "description": "Read physical and reserved warehouse stock.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_available_stock",
+        "description": "Compute sellable quantity = on-hand minus reserved.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_low_stock",
+        "description": "List SKUs below their reorder point using available stock.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "reserve_stock",
+        "description": "Allocate available stock without changing physical count.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "quantity",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "quantity"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "release_stock",
+        "description": "Release reserved warehouse units to sellable stock.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "quantity",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "quantity"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "receive_stock",
+        "description": "Add a physical supplier receipt to on-hand units.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "quantity",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "quantity"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_reorder_point",
+        "description": "Change the replenishment threshold.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "quantity": {
+              "type": "integer",
+              "description": "quantity",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "quantity"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "transfer_stock",
+        "description": "Move the SKU stock location to another warehouse.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "warehouse": {
+              "type": "string",
+              "enum": [
+                "east",
+                "west"
+              ]
+            }
+          },
+          "required": [
+            "sku",
+            "warehouse"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_stock_value",
+        "description": "Compute warehouse value at product cost, not retail price.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "inventory",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "audit_stock",
+        "description": "Compare a counted physical quantity with the recorded quantity.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "counted": {
+              "type": "integer",
+              "description": "counted",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "counted"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_shipment",
+        "description": "Read a parcel record by shipment ID.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "shipment_id": {
+              "type": "string",
+              "description": "shipment id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "shipment_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "find_order_shipments",
+        "description": "Find parcels attached to a sales order.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "track_parcel",
+        "description": "Read delivery status and carrier tracking number.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "shipment_id": {
+              "type": "string",
+              "description": "shipment id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "shipment_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "estimate_delivery",
+        "description": "Read the promised arrival date.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "shipment_id": {
+              "type": "string",
+              "description": "shipment id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "shipment_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "quote_shipping",
+        "description": "Calculate domestic transport fee from parcel weight and service.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "weight_kg": {
+              "type": "number",
+              "description": "weight kg",
+              "minimum": 0
+            },
+            "service": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "express"
+              ]
+            }
+          },
+          "required": [
+            "weight_kg",
+            "service"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_parcel_address",
+        "description": "Redirect an existing parcel; does not change order billing address.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "shipment_id": {
+              "type": "string",
+              "description": "shipment id",
+              "minLength": 1
+            },
+            "address": {
+              "type": "string",
+              "description": "address",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "shipment_id",
+            "address"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_carrier",
+        "description": "Assign a parcel to a transport provider.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "shipment_id": {
+              "type": "string",
+              "description": "shipment id",
+              "minLength": 1
+            },
+            "carrier": {
+              "type": "string",
+              "enum": [
+                "ParcelCo",
+                "QuickShip"
+              ]
+            }
+          },
+          "required": [
+            "shipment_id",
+            "carrier"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "mark_delivered",
+        "description": "Record delivery confirmation with an ISO date.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "shipment_id": {
+              "type": "string",
+              "description": "shipment id",
+              "minLength": 1
+            },
+            "date": {
+              "type": "string",
+              "description": "date",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "shipment_id",
+            "date"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "create_shipping_label",
+        "description": "Create an outbound parcel from an unshipped order.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            },
+            "service": {
+              "type": "string",
+              "enum": [
+                "standard",
+                "express"
+              ]
+            }
+          },
+          "required": [
+            "order_id",
+            "service"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "shipping",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_delivery_exceptions",
+        "description": "List parcels whose transport status is exception.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_customer",
+        "description": "Read customer profile by stable customer ID.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "search_customers",
+        "description": "Search names case-insensitively; names may identify multiple people.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "name",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_customer_by_email",
+        "description": "Resolve exact email to a customer profile.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "email",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "email"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_customer_email",
+        "description": "Replace a customer contact email.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            },
+            "email": {
+              "type": "string",
+              "description": "email",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id",
+            "email"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_customer_address",
+        "description": "Change customer default address, not an existing order or parcel.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            },
+            "address": {
+              "type": "string",
+              "description": "address",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id",
+            "address"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_marketing_consent",
+        "description": "Set customer opt-in permission for marketing.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            },
+            "consent": {
+              "type": "boolean",
+              "description": "consent"
+            }
+          },
+          "required": [
+            "customer_id",
+            "consent"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_loyalty_balance",
+        "description": "Read loyalty tier and point balance, not cash credit.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "award_loyalty_points",
+        "description": "Add earned loyalty points.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            },
+            "points": {
+              "type": "integer",
+              "description": "points",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "customer_id",
+            "points"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "issue_store_credit",
+        "description": "Add store credit in dollars, without refunding a payment.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "number",
+              "description": "amount",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "customer_id",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "customers",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "tag_customer",
+        "description": "Add a segmentation label to a customer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            },
+            "tag": {
+              "type": "string",
+              "description": "tag",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id",
+            "tag"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_invoice",
+        "description": "Read invoice, payment and refunded amounts.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "invoice_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "find_order_invoices",
+        "description": "Find billing invoices linked to a sales order.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_invoice_balance",
+        "description": "Compute remaining amount payable.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "invoice_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "record_payment",
+        "description": "Apply a local payment to an outstanding invoice.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "number",
+              "description": "amount",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "invoice_id",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "refund_payment",
+        "description": "Refund a captured payment, not authorize a physical return or store credit.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "number",
+              "description": "amount",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "invoice_id",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_invoice_due_date",
+        "description": "Change invoice payment deadline.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            },
+            "date": {
+              "type": "string",
+              "description": "date",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "invoice_id",
+            "date"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "add_invoice_memo",
+        "description": "Attach an accounting memo.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            },
+            "memo": {
+              "type": "string",
+              "description": "memo",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "invoice_id",
+            "memo"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_unpaid_invoices",
+        "description": "List invoices with positive outstanding amount.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "send_payment_reminder",
+        "description": "Record a fictional payment reminder in local notes.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "invoice_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "billing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_refund_capacity",
+        "description": "Compute maximum additional refund available.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "invoice_id": {
+              "type": "string",
+              "description": "invoice id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "invoice_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_ticket",
+        "description": "Read a helpdesk case.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_customer_tickets",
+        "description": "Find cases for one customer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "reply_ticket",
+        "description": "Append a local support response; never sends external mail.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            },
+            "message": {
+              "type": "string",
+              "description": "message",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id",
+            "message"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "assign_ticket",
+        "description": "Assign the helpdesk owner.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            },
+            "agent": {
+              "type": "string",
+              "description": "agent",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id",
+            "agent"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "close_ticket",
+        "description": "Resolve a helpdesk case, without changing order or refund state.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "reopen_ticket",
+        "description": "Return a case to the open queue.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "escalate_ticket",
+        "description": "Raise urgency to high and assign the escalation queue.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "tag_ticket",
+        "description": "Attach a classification to a support case.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            },
+            "tag": {
+              "type": "string",
+              "description": "tag",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id",
+            "tag"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_ticket_sla",
+        "description": "Read response deadline in hours.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "ticket_id": {
+              "type": "string",
+              "description": "ticket id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ticket_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "support",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_open_tickets",
+        "description": "List unresolved helpdesk cases.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_campaign",
+        "description": "Read campaign budget and engagement record.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "campaign_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_campaign_budget",
+        "description": "Set campaign spending ceiling.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "number",
+              "description": "amount",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "campaign_id",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "pause_campaign",
+        "description": "Pause promotional campaign delivery.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "campaign_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "activate_campaign",
+        "description": "Make a campaign active.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "campaign_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_campaign_segment",
+        "description": "Select campaign audience by customer tier.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            },
+            "tier": {
+              "type": "string",
+              "enum": [
+                "all",
+                "silver",
+                "gold"
+              ]
+            }
+          },
+          "required": [
+            "campaign_id",
+            "tier"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_campaign_ctr",
+        "description": "Compute clicks divided by impressions.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "campaign_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_campaign_conversion_rate",
+        "description": "Compute conversions per click, not click-through rate.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "campaign_id": {
+              "type": "string",
+              "description": "campaign id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "campaign_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_coupon",
+        "description": "Read coupon discount and redemption record.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "code",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "code"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "disable_coupon",
+        "description": "Deactivate an existing promotional code.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "string",
+              "description": "code",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "code"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "marketing",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_opted_in_audience",
+        "description": "List only customers consenting to marketing.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_product",
+        "description": "Read product catalog record, not warehouse counts.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "search_products",
+        "description": "Search product names by substring.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "query",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_product_price",
+        "description": "Change retail selling price; existing orders retain historical totals.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "price": {
+              "type": "number",
+              "description": "price",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "price"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_product_cost",
+        "description": "Change supplier unit cost used by margin calculations.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "cost": {
+              "type": "number",
+              "description": "cost",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "cost"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_product_description",
+        "description": "Replace customer-facing product copy.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "description": {
+              "type": "string",
+              "description": "description",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku",
+            "description"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_product_category",
+        "description": "Change merchandising classification.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "category": {
+              "type": "string",
+              "description": "category",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku",
+            "category"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_product_weight",
+        "description": "Set parcel-planning unit weight in kilograms.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "weight_kg": {
+              "type": "number",
+              "description": "weight kg",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "sku",
+            "weight_kg"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "deactivate_product",
+        "description": "Remove a listing from active sale; keeps warehouse stock.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "tag_product",
+        "description": "Attach a merchandising keyword.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            },
+            "tag": {
+              "type": "string",
+              "description": "tag",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku",
+            "tag"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "catalog",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_product_margin",
+        "description": "Compute unit retail price less supplier cost.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_return",
+        "description": "Read a physical merchandise return record.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "list_order_returns",
+        "description": "Find merchandise returns for an order.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_id": {
+              "type": "string",
+              "description": "order id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "order_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "authorize_return",
+        "description": "Approve a requested physical return; does not refund money.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "reject_return",
+        "description": "Reject a physical return request.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "create_return_label",
+        "description": "Generate an inbound return label, not outbound shipment.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "receive_return",
+        "description": "Record that returned merchandise reached the warehouse.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "inspect_return",
+        "description": "Record condition of received merchandise.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            },
+            "condition": {
+              "type": "string",
+              "enum": [
+                "resellable",
+                "damaged"
+              ]
+            }
+          },
+          "required": [
+            "return_id",
+            "condition"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "set_return_fee",
+        "description": "Set a restocking fee without issuing any payment.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            },
+            "amount": {
+              "type": "number",
+              "description": "amount",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "return_id",
+            "amount"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": true,
+      "type": "function",
+      "function": {
+        "name": "restock_return",
+        "description": "Add inspected resellable received goods to inventory once.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "returns",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "get_return_refund_quote",
+        "description": "Calculate retail return value less restocking fee; does not issue refund.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "return_id": {
+              "type": "string",
+              "description": "return id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "return_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "sales_summary",
+        "description": "Aggregate noncancelled historical sales orders.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "sales_by_customer",
+        "description": "Aggregate historical sales for one customer.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "customer_id": {
+              "type": "string",
+              "description": "customer id",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "customer_id"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "sales_by_sku",
+        "description": "Aggregate units sold for a SKU from order lines.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": {
+              "type": "string",
+              "description": "sku",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "sku"
+          ],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "inventory_summary",
+        "description": "Aggregate physical, reserved and available units across SKUs.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "receivables_summary",
+        "description": "Aggregate outstanding invoice exposure.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "refund_summary",
+        "description": "Aggregate refunded captured payments.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "support_summary",
+        "description": "Count open cases by urgency.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "shipping_summary",
+        "description": "Count total and delivered parcels.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "marketing_summary",
+        "description": "Aggregate promotion spend, clicks and conversions.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    },
+    {
+      "category": "analytics",
+      "mutates": false,
+      "type": "function",
+      "function": {
+        "name": "customer_summary",
+        "description": "Count customers, consent and total loyalty points.",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        }
+      }
+    }
+  ]
+}

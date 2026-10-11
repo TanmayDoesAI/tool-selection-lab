@@ -1,5 +1,5 @@
 """Export the study's 100-tool catalogue and 329 haiku tasks in toolpick's format, so anyone can run our test on their own model or harness.
-  uv run --frozen python scripts/export_kit.py ../kit/examples/northstar-haiku
+  uv run --frozen python scripts/export_kit.py ../kit/examples/northstar-full
 Mocks are the real outputs of each task's reference calls, executed on the task's fixture, so multi-step flows see consistent data.
 toolpick grades selection only (right tools, right arguments); the study grades outcomes (final state and facts in the reply),
 so scores are comparable across strategies and models inside toolpick, not with the study's numbers.

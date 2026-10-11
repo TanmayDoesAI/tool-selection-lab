@@ -1,4 +1,4 @@
-"""Paired analysis across one or more live runs (pre-registered rules in docs/preregistration.md).
+"""Paired analysis across one or more runs: per-arm completion, exact sign tests between arms, and the sweet spot.
   uv run python scripts/analyze.py runs/A runs/B [--out analysis.json]
 Arms are labelled model|strategy so several models' runs can be compared on the same tasks.
 """
@@ -27,7 +27,7 @@ def load(paths):
     return arms,meta
 
 def main():
-    p=argparse.ArgumentParser();p.add_argument('runs',nargs='+');p.add_argument('--out');p.add_argument('--margin',type=int,default=2,help='pre-registered sweet-spot margin in tasks')
+    p=argparse.ArgumentParser();p.add_argument('runs',nargs='+');p.add_argument('--out');p.add_argument('--margin',type=int,default=2,help='sweet spot: cheapest arm within this many tasks of the best')
     a=p.parse_args();arms,meta=load(a.runs);summary={}
     print(f'{"arm":45} {"done":>7} {"healthy":>9} {"med_in_tok":>10} {"shortlist":>9}  failures')
     for arm,rows in sorted(arms.items()):
